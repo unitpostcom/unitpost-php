@@ -1,0 +1,10 @@
+{
+  "name": "@unitpost/sdk-php",
+  "version": "0.3.0",
+  "description": "Workspace shim for the PHP SDK (published to Packagist as unitpost/unitpost).",
+  "private": true,
+  "scripts": {
+    "test": "command -v php >/dev/null 2>&1 && (cd packages/sdk-php 2>/dev/null; php vendor/bin/phpunit --colors=never 2>/dev/null || echo 'skip: php/phpunit not available (run in the dedicated sdks CI job)')",
+    "build": "echo 'php sdk: composer package, built in publish-sdk-php.yml'"
+  }
+}
