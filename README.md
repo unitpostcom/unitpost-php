@@ -21,4 +21,6 @@ if ($result->error) {
 }
 ```
 
+`$unitpost->sms` is the SMS channel: **beta, behind the launch gate**. It is wired in its GA shape (send, get, list, brands, numbers, contact SMS consent); while your workspace's gate is off every call returns `404`.
+
 Docs: https://www.unitpost.com/docs

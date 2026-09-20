@@ -14,7 +14,12 @@ namespace Unitpost;
 final class Client
 {
     public Email $email;
-    // NOTE (pre-launch): `sms` is intentionally absent while SMS is unpublished.
+    /**
+     * SMS channel (beta, behind the launch gate). Wired in its GA shape; while
+     * a workspace's gate is off every call returns the same 404 the REST
+     * surface does.
+     */
+    public Sms $sms;
     public Contacts $contacts;
     public ContactFields $contactFields;
     public Segments $segments;
@@ -29,6 +34,7 @@ final class Client
     {
         $http = new HttpClient($options);
         $this->email = new Email($http);
+        $this->sms = new Sms($http);
         $this->contacts = new Contacts($http);
         $this->contactFields = new ContactFields($http);
         $this->segments = new Segments($http);

@@ -41,6 +41,57 @@ final class Sms extends Resource
     {
         return $this->http->request("GET", "/sms", $params);
     }
+
+    /**
+     * List SMS brands and their setup status.
+     *
+     * A brand is the business identity carriers register before they approve a
+     * phone number, so this is what to poll to answer "is SMS ready yet?":
+     * `status` says whether you or the carrier is the blocker, and `missing`
+     * lists exactly what is still required.
+     *
+     * Read-only — creating a brand is a paid carrier submission and is only
+     * available in the dashboard.
+     *
+     * @param array<string, mixed> $params
+     */
+    public function brands(array $params = []): Result
+    {
+        return $this->http->request("GET", "/sms/brands", $params);
+    }
+
+    /**
+     * List SMS phone numbers.
+     *
+     * Only numbers with `status: "active"` can send. A `ten_dlc` number has no
+     * `phone_number` until carriers approve it, and a `simulator` number only
+     * reaches verified test destinations.
+     *
+     * Read-only — requesting or releasing a number is only available in the
+     * dashboard.
+     *
+     * @param array<string, mixed> $params
+     */
+    public function numbers(array $params = []): Result
+    {
+        return $this->http->request("GET", "/sms/numbers", $params);
+    }
+
+    /** Read a contact's SMS consent state and immutable consent history. */
+    public function smsConsent(string $contactId): Result
+    {
+        return $this->http->request("GET", "/contacts/" . enc($contactId) . "/sms-consent");
+    }
+
+    /**
+     * Record an SMS consent change (opt-in or opt-out) for a contact.
+     *
+     * @param array<string, mixed> $body
+     */
+    public function recordSmsConsent(string $contactId, array $body): Result
+    {
+        return $this->http->request("POST", "/contacts/" . enc($contactId) . "/sms-consent", null, $body);
+    }
 }
 
 final class Email extends Resource
