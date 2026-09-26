@@ -4,7 +4,7 @@
   "description": "Workspace shim for the PHP SDK (published to Packagist as unitpost/unitpost).",
   "private": true,
   "scripts": {
-    "test": "command -v php >/dev/null 2>&1 && (cd packages/sdk-php 2>/dev/null; php vendor/bin/phpunit --colors=never 2>/dev/null || echo 'skip: php/phpunit not available (run in the dedicated sdks CI job)')",
+    "test": "if command -v php >/dev/null 2>&1 && [ -f vendor/bin/phpunit ]; then php vendor/bin/phpunit --colors=never; else echo 'skip: php or vendor/bin/phpunit not available (composer install runs in the dedicated sdks CI job)'; fi",
     "build": "echo 'php sdk: composer package, built in publish-sdk-php.yml'"
   }
 }
