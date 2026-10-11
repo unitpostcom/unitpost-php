@@ -36,6 +36,17 @@ final class Sms extends Resource
         return $this->http->request("GET", "/sms/" . enc($id));
     }
 
+    /**
+     * Cancel a queued/scheduled SMS (`['cancel' => true]`, credit refunded) or
+     * move a scheduled one (`['scheduled_at' => '<ISO 8601>']`).
+     *
+     * @param array<string, mixed> $body
+     */
+    public function update(string $id, array $body): Result
+    {
+        return $this->http->request("PATCH", "/sms/" . enc($id), null, $body);
+    }
+
     /** @param array<string, mixed> $params */
     public function list(array $params = []): Result
     {
@@ -217,6 +228,11 @@ final class Contacts extends Resource
     public function getImport(string $id): Result
     {
         return $this->http->request("GET", "/contacts/imports/" . enc($id));
+    }
+
+    public function cancelImport(string $id): Result
+    {
+        return $this->http->request("POST", "/contacts/imports/" . enc($id) . "/cancel");
     }
 }
 

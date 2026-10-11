@@ -15,9 +15,8 @@ final class Client
 {
     public Email $email;
     /**
-     * SMS channel (beta, behind the launch gate). Wired in its GA shape; while
-     * a workspace's gate is off every call returns the same 404 the REST
-     * surface does.
+     * SMS channel. Available on paid plans: on the free plan `send` returns a
+     * 403 with code `limit_reached`; reads keep working.
      */
     public Sms $sms;
     public Contacts $contacts;
