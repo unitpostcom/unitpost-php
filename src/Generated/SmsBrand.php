@@ -83,14 +83,16 @@ final class SmsBrand
     public readonly bool $taxIdOnFile;
 
     /**
-     * Active (non-released) phone numbers backed by this brand.
+     * Non-released senders on this brand (phone numbers and Sender ID
+     * countries, any status).
      * @var int
      */
     public readonly int $numberCount;
 
     /**
-     * False once the brand is locked (carrier-approved or in review). Locked
-     * brands can only be corrected when the carrier asks.
+     * False once the brand is locked: carriers approved or are reviewing its
+     * 10DLC registration, or senders are registered with its details. Locked
+     * brands are corrected only when carriers ask.
      * @var bool
      */
     public readonly bool $editable;

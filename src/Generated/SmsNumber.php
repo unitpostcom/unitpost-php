@@ -27,7 +27,7 @@ final class SmsNumber
     public readonly string $id;
 
     /**
-     * E.164 number. Null while a 10DLC registration is still in review — the
+     * E.164 number. Null while a 10DLC registration is still in review; the
      * number is assigned on approval.
      * @var ?string
      */
@@ -52,6 +52,8 @@ final class SmsNumber
     public readonly string $status;
 
     /**
+     * Informational: the workspace's first or primary number. Sends route by
+     * the recipient's country, not by this flag.
      * @var bool
      */
     public readonly bool $isDefault;
@@ -87,7 +89,9 @@ final class SmsNumber
     public readonly ?SmsNumberUseCase $useCase;
 
     /**
-     * Set when status is `action_required` or `rejected`.
+     * Set when status is `action_required` (what to fix: carrier feedback, why
+     * a submission failed, or a request that never reached the registry) or
+     * `rejected`.
      * @var ?string
      */
     public readonly ?string $actionRequiredReason;

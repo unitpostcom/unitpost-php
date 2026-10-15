@@ -25,6 +25,18 @@ abstract class Resource
 
 final class Sms extends Resource
 {
+    public SmsTemplates $templates;
+    public SmsCampaigns $campaigns;
+    public SmsTopics $topics;
+
+    public function __construct(HttpClient $http)
+    {
+        parent::__construct($http);
+        $this->templates = new SmsTemplates($http);
+        $this->campaigns = new SmsCampaigns($http);
+        $this->topics = new SmsTopics($http);
+    }
+
     /** @param array<string, mixed> $body */
     public function send(array $body, ?string $idempotencyKey = null): Result
     {
@@ -88,6 +100,19 @@ final class Sms extends Resource
         return $this->http->request("GET", "/sms/numbers", $params);
     }
 
+    /**
+     * SMS delivery stats over a rolling window (`days`: 1–365, default 30):
+     * queued, sent, delivered, failed, suppressed, canceled, inbound and
+     * segments billed, with delivery, failure and suppression rates. No opens
+     * or clicks on SMS.
+     *
+     * @param array<string, mixed> $params
+     */
+    public function stats(array $params = []): Result
+    {
+        return $this->http->request("GET", "/sms/stats", $params);
+    }
+
     /** Read a contact's SMS consent state and immutable consent history. */
     public function smsConsent(string $contactId): Result
     {
@@ -102,6 +127,136 @@ final class Sms extends Resource
     public function recordSmsConsent(string $contactId, array $body): Result
     {
         return $this->http->request("POST", "/contacts/" . enc($contactId) . "/sms-consent", null, $body);
+    }
+}
+
+/** SMS templates: plain-text bodies with {{variable}} placeholders. */
+final class SmsTemplates extends Resource
+{
+    /** @param array<string, mixed> $params */
+    public function list(array $params = []): Result
+    {
+        return $this->http->request("GET", "/sms/templates", $params);
+    }
+
+    /** @param array<string, mixed> $body */
+    public function create(array $body): Result
+    {
+        return $this->http->request("POST", "/sms/templates", null, $body);
+    }
+
+    public function get(string $id): Result
+    {
+        return $this->http->request("GET", "/sms/templates/" . enc($id));
+    }
+
+    /** @param array<string, mixed> $body */
+    public function update(string $id, array $body): Result
+    {
+        return $this->http->request("PATCH", "/sms/templates/" . enc($id), null, $body);
+    }
+
+    public function delete(string $id): Result
+    {
+        return $this->http->request("DELETE", "/sms/templates/" . enc($id));
+    }
+}
+
+/** SMS subscription topics (independent from email topics); delete archives. */
+/** SMS campaigns: a published SMS template sent to a segment; delete archives. */
+final class SmsCampaigns extends Resource
+{
+    /** @param array<string, mixed> $params */
+    public function list(array $params = []): Result
+    {
+        return $this->http->request("GET", "/sms/campaigns", $params);
+    }
+
+    /** @param array<string, mixed> $body */
+    public function create(array $body): Result
+    {
+        return $this->http->request("POST", "/sms/campaigns", null, $body);
+    }
+
+    public function get(string $id): Result
+    {
+        return $this->http->request("GET", "/sms/campaigns/" . enc($id));
+    }
+
+    /** @param array<string, mixed> $body */
+    public function update(string $id, array $body): Result
+    {
+        return $this->http->request("PATCH", "/sms/campaigns/" . enc($id), null, $body);
+    }
+
+    public function delete(string $id): Result
+    {
+        return $this->http->request("DELETE", "/sms/campaigns/" . enc($id));
+    }
+
+    /** @param array<string, mixed> $body Optional `scheduled_at`; omit to arm the draft's saved send time (or send now). */
+    public function send(string $id, array $body = []): Result
+    {
+        // Always a JSON object: json_encode([]) is `[]`, which the endpoint
+        // rejects (422). `(object)` turns the default into `{}`.
+        return $this->http->request("POST", "/sms/campaigns/" . enc($id) . "/send", null, (object) $body);
+    }
+
+    public function cancel(string $id): Result
+    {
+        return $this->http->request("POST", "/sms/campaigns/" . enc($id) . "/cancel");
+    }
+
+    public function pause(string $id): Result
+    {
+        return $this->http->request("POST", "/sms/campaigns/" . enc($id) . "/pause");
+    }
+
+    public function resume(string $id): Result
+    {
+        return $this->http->request("POST", "/sms/campaigns/" . enc($id) . "/resume");
+    }
+
+    /** @param array<string, mixed> $body */
+    public function reschedule(string $id, array $body): Result
+    {
+        return $this->http->request("POST", "/sms/campaigns/" . enc($id) . "/reschedule", null, $body);
+    }
+
+    public function validate(string $id): Result
+    {
+        return $this->http->request("GET", "/sms/campaigns/" . enc($id) . "/validate");
+    }
+}
+
+final class SmsTopics extends Resource
+{
+    /** @param array<string, mixed> $params */
+    public function list(array $params = []): Result
+    {
+        return $this->http->request("GET", "/sms/topics", $params);
+    }
+
+    /** @param array<string, mixed> $body */
+    public function create(array $body): Result
+    {
+        return $this->http->request("POST", "/sms/topics", null, $body);
+    }
+
+    public function get(string $id): Result
+    {
+        return $this->http->request("GET", "/sms/topics/" . enc($id));
+    }
+
+    /** @param array<string, mixed> $body */
+    public function update(string $id, array $body): Result
+    {
+        return $this->http->request("PATCH", "/sms/topics/" . enc($id), null, $body);
+    }
+
+    public function delete(string $id): Result
+    {
+        return $this->http->request("DELETE", "/sms/topics/" . enc($id));
     }
 }
 

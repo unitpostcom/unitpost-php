@@ -34,6 +34,23 @@ final class SdkTest extends TestCase
         $this->assertStringContainsString('User-Agent: unitpost-php/', $joined);
     }
 
+    public function testSmsCampaignSendWithoutOptionsSendsAJsonObject(): void
+    {
+        $bodies = [];
+        $client = new Client([
+            'apiKey' => 'test_key',
+            'baseUrl' => 'https://api.test',
+            'handler' => function (string $method, string $url, array $headers, ?string $body) use (&$bodies) {
+                $bodies[] = $body;
+                return ['status' => 200, 'headers' => [], 'body' => json_encode(['id' => 'smscmp_1'])];
+            },
+        ]);
+        $this->assertNull($client->sms->campaigns->send('smscmp_1')->error);
+        $this->assertNull($client->sms->campaigns->send('smscmp_1', ['scheduled_at' => '2026-11-01T09:00:00Z'])->error);
+        $this->assertSame('{}', $bodies[0]);
+        $this->assertSame('{"scheduled_at":"2026-11-01T09:00:00Z"}', $bodies[1]);
+    }
+
     public function testMapsNon2xxToTypedError(): void
     {
         $client = new Client([
