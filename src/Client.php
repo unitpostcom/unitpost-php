@@ -26,6 +26,7 @@ final class Client
     public Webhooks $webhooks;
     public ApiKeys $apiKeys;
     public Suppressions $suppressions;
+    public Jobs $jobs;
     public Usage $usage;
 
     /** @param array<string, mixed> $options */
@@ -41,6 +42,7 @@ final class Client
         $this->webhooks = new Webhooks($http);
         $this->apiKeys = new ApiKeys($http);
         $this->suppressions = new Suppressions($http);
+        $this->jobs = new Jobs($http);
         $this->usage = new Usage($http);
     }
 }

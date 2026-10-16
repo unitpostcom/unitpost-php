@@ -428,6 +428,15 @@ final class ContactFields extends Resource
     }
 }
 
+final class Jobs extends Resource
+{
+    /** A background job (the 202 answer of a large operation); poll until it finishes. */
+    public function get(string $id): Result
+    {
+        return $this->http->request("GET", "/jobs/" . enc($id));
+    }
+}
+
 final class Segments extends Resource
 {
     /** @param array<string, mixed> $params */
