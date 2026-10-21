@@ -17,11 +17,12 @@ final class SmsError
     /**
      * Why a message was skipped before reaching the carrier. `out_of_reach`:
      * no sender covers the recipient's country; `unsupported_country`: no
-     * compliance rule for the country yet; `no_phone`: the contact has no SMS
-     * handle; `opted_out`: STOP / suppression / unreachable;
-     * `no_marketing_consent`: marketing without express consent;
-     * `quiet_hours_deferred`: delayed to the recipient's local window;
-     * `sender_not_active`: the sender lost approval.
+     * compliance rule for the country yet, or SMS to that country is paused
+     * for now (every message, transactional included, until it resumes);
+     * `no_phone`: the contact has no SMS handle; `opted_out`: STOP /
+     * suppression / unreachable; `no_marketing_consent`: marketing without
+     * express consent; `quiet_hours_deferred`: delayed to the recipient's
+     * local window; `sender_not_active`: the sender lost approval.
      * @var string
      */
     public readonly string $code;
