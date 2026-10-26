@@ -128,4 +128,84 @@ final class SdkTest extends TestCase
         $key = base64_decode(strtr($raw, '-_', '+/') . str_repeat('=', $pad), true);
         return 'v1,' . base64_encode(hash_hmac('sha256', $id . '.' . $ts . '.' . $body, $key, true));
     }
+
+    public function testCallerSuppliedIdempotencyKey(): void
+    {
+        $keys = [];
+        $client = new Client([
+            'apiKey' => 'test_key',
+            'baseUrl' => 'https://api.test',
+            'handler' => function (string $method, string $url, array $headers, ?string $body) use (&$keys) {
+                $key = '';
+                foreach ($headers as $h) {
+                    if (str_starts_with($h, 'Idempotency-Key: ')) {
+                        $key = substr($h, strlen('Idempotency-Key: '));
+                    }
+                }
+                $keys[] = $key;
+                return ['status' => 200, 'headers' => [], 'body' => '{"id":"x"}'];
+            },
+        ]);
+        $client->email->send(['to' => 'b@test.com'], 'order-1');
+        $client->email->batch([['to' => 'b@test.com']], 'batch-1');
+        $client->sms->send(['to' => '+15551230000'], 'sms-1');
+        $client->email->send(['to' => 'b@test.com']);
+        $this->assertSame(['order-1', 'batch-1', 'sms-1'], array_slice($keys, 0, 3));
+        $this->assertNotSame('', $keys[3]);
+        $this->assertNotSame('order-1', $keys[3]);
+    }
+
+    public function testListAllFollowsCursor(): void
+    {
+        $urls = [];
+        $client = new Client([
+            'apiKey' => 'test_key',
+            'baseUrl' => 'https://api.test',
+            'handler' => function (string $method, string $url) use (&$urls) {
+                $urls[] = $url;
+                if (!str_contains($url, 'after=')) {
+                    return ['status' => 200, 'headers' => [], 'body' => '{"object":"list","has_more":true,"data":[{"id":"c1"},{"id":"c2"}]}'];
+                }
+                return ['status' => 200, 'headers' => [], 'body' => '{"object":"list","has_more":false,"data":[{"id":"c3"}]}'];
+            },
+        ]);
+        $ids = [];
+        foreach ($client->contacts->listAll(['status' => 'active']) as $row) {
+            $ids[] = $row['id'];
+        }
+        $this->assertSame(['c1', 'c2', 'c3'], $ids);
+        $this->assertCount(2, $urls);
+        $this->assertStringContainsString('after=c2', $urls[1]);
+        $this->assertStringContainsString('status=active', $urls[1]);
+    }
+
+    public function testListAllThrowsApiError(): void
+    {
+        $client = new Client([
+            'apiKey' => 'test_key',
+            'baseUrl' => 'https://api.test',
+            'handler' => fn () => ['status' => 403, 'headers' => [], 'body' => '{"error":{"code":"forbidden","message":"no"}}'],
+        ]);
+        try {
+            foreach ($client->webhooks->listAll() as $_) {
+            }
+            $this->fail('expected UnitpostException');
+        } catch (\Unitpost\UnitpostException $e) {
+            $this->assertSame('forbidden', $e->error->code);
+        }
+    }
+
+    public function testListAllRefusesBeforeUpFront(): void
+    {
+        $client = new Client([
+            'apiKey' => 'test_key',
+            'baseUrl' => 'https://api.test',
+            'handler' => function () {
+                throw new \LogicException('no request may be sent');
+            },
+        ]);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/pages forward only/');
+        $client->contacts->listAll(['before' => 'con_9']);
+    }
 }

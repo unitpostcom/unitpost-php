@@ -66,6 +66,16 @@ final class SmsNumber
     public readonly ?string $country;
 
     /**
+     * Whether people can text this number: once it is active, a text to it
+     * fires the `sms.received` webhook and costs 1¢. True for US toll-free and
+     * 10DLC numbers and Canadian long codes (two-way is offered in the US and
+     * Canada only); false for Sender IDs, which are one-way, and for the
+     * simulator.
+     * @var bool
+     */
+    public readonly bool $twoWay;
+
+    /**
      * ISO-3166 alpha-2 countries this number can deliver to. US toll-free and
      * 10DLC numbers reach `["US"]` only; a Canadian long code reaches `["CA"]`
      * only. A recipient outside this list is skipped before send (status
@@ -119,6 +129,7 @@ final class SmsNumber
         string $status,
         bool $isDefault,
         ?string $country,
+        bool $twoWay,
         array $reach,
         ?string $brandId,
         ?SmsNumberUseCase $useCase,
@@ -133,6 +144,7 @@ final class SmsNumber
         $this->status = $status;
         $this->isDefault = $isDefault;
         $this->country = $country;
+        $this->twoWay = $twoWay;
         $this->reach = $reach;
         $this->brandId = $brandId;
         $this->useCase = $useCase;
@@ -156,6 +168,7 @@ final class SmsNumber
             (string) $data["status"],
             (bool) $data["is_default"],
             isset($data["country"]) ? (string) $data["country"] : null,
+            (bool) $data["two_way"],
             $data["reach"] ?? [],
             isset($data["brand_id"]) ? (string) $data["brand_id"] : null,
             isset($data["use_case"]) ? SmsNumberUseCase::fromArray($data["use_case"]) : null,

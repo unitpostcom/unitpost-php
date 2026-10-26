@@ -11,7 +11,7 @@ use Unitpost\Generated\Operations;
  */
 final class HttpClient
 {
-    public const SDK_VERSION = '0.3.0';
+    public const SDK_VERSION = '0.4.0';
     public const DEFAULT_BASE_URL = 'https://www.unitpost.com';
 
     private string $apiKey;

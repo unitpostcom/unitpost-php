@@ -21,6 +21,58 @@ abstract class Resource
     public function __construct(protected HttpClient $http)
     {
     }
+
+    /**
+     * Yield every row of a cursor-paginated list, following `has_more` with the
+     * last row's `id` as the next `after` cursor. Filters in $params ride along
+     * on every page; only the cursor moves. A failed page request throws
+     * {@see UnitpostException} (a generator has no Result to put it in).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    protected function paginate(string $path, array $params): \Generator
+    {
+        // Forward only, refused up front (this method has no `yield`, so it
+        // runs at the listAll() call): a `before` cursor used to ride along
+        // with the moving `after` and 422 on the second page.
+        if (!empty($params['before'])) {
+            throw new \InvalidArgumentException(
+                'listAll pages forward only: `before` is not supported (use list() to page backward).'
+            );
+        }
+        return $this->pages($path, $params);
+    }
+
+    /**
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    private function pages(string $path, array $params): \Generator
+    {
+        $after = $params['after'] ?? null;
+        while (true) {
+            $query = $params;
+            if ($after === null) {
+                unset($query['after']);
+            } else {
+                $query['after'] = $after;
+            }
+            $page = $this->http->request("GET", $path, $query);
+            if ($page->error !== null) {
+                throw new UnitpostException($page->error);
+            }
+            $rows = is_array($page->data) ? ($page->data['data'] ?? []) : [];
+            foreach ($rows as $row) {
+                yield $row;
+            }
+            $last = $rows === [] ? null : $rows[array_key_last($rows)];
+            if (empty($page->data['has_more']) || !is_array($last) || !isset($last['id'])) {
+                return;
+            }
+            $after = $last['id'];
+        }
+    }
 }
 
 final class Sms extends Resource
@@ -37,7 +89,12 @@ final class Sms extends Resource
         $this->topics = new SmsTopics($http);
     }
 
-    /** @param array<string, mixed> $body */
+    /**
+     * Pass $idempotencyKey to make a retried send safe across your own process
+     * restarts (the API replays the first result); omitted, the SDK mints one.
+     *
+     * @param array<string, mixed> $body
+     */
     public function send(array $body, ?string $idempotencyKey = null): Result
     {
         return $this->http->request("POST", "/sms", null, $body, $idempotencyKey ?? bin2hex(random_bytes(16)));
@@ -63,6 +120,17 @@ final class Sms extends Resource
     public function list(array $params = []): Result
     {
         return $this->http->request("GET", "/sms", $params);
+    }
+
+    /**
+     * Iterate every row of /sms across pages (lazily, as a Generator).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function listAll(array $params = []): \Generator
+    {
+        return $this->paginate("/sms", $params);
     }
 
     /**
@@ -139,6 +207,17 @@ final class SmsTemplates extends Resource
         return $this->http->request("GET", "/sms/templates", $params);
     }
 
+    /**
+     * Iterate every row of /sms/templates across pages (lazily, as a Generator).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function listAll(array $params = []): \Generator
+    {
+        return $this->paginate("/sms/templates", $params);
+    }
+
     /** @param array<string, mixed> $body */
     public function create(array $body): Result
     {
@@ -170,6 +249,17 @@ final class SmsCampaigns extends Resource
     public function list(array $params = []): Result
     {
         return $this->http->request("GET", "/sms/campaigns", $params);
+    }
+
+    /**
+     * Iterate every row of /sms/campaigns across pages (lazily, as a Generator).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function listAll(array $params = []): \Generator
+    {
+        return $this->paginate("/sms/campaigns", $params);
     }
 
     /** @param array<string, mixed> $body */
@@ -237,6 +327,17 @@ final class SmsTopics extends Resource
         return $this->http->request("GET", "/sms/topics", $params);
     }
 
+    /**
+     * Iterate every row of /sms/topics across pages (lazily, as a Generator).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function listAll(array $params = []): \Generator
+    {
+        return $this->paginate("/sms/topics", $params);
+    }
+
     /** @param array<string, mixed> $body */
     public function create(array $body): Result
     {
@@ -276,7 +377,12 @@ final class Email extends Resource
         $this->domains = new Domains($http);
     }
 
-    /** @param array<string, mixed> $body */
+    /**
+     * Pass $idempotencyKey to make a retried send safe across your own process
+     * restarts (the API replays the first result); omitted, the SDK mints one.
+     *
+     * @param array<string, mixed> $body
+     */
     public function send(array $body, ?string $idempotencyKey = null): Result
     {
         return $this->http->request("POST", "/email", null, $body, $idempotencyKey ?? bin2hex(random_bytes(16)));
@@ -302,6 +408,17 @@ final class Email extends Resource
     public function list(array $params = []): Result
     {
         return $this->http->request("GET", "/email", $params);
+    }
+
+    /**
+     * Iterate every row of /email across pages (lazily, as a Generator).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function listAll(array $params = []): \Generator
+    {
+        return $this->paginate("/email", $params);
     }
 
     public function get(string $id): Result
@@ -344,6 +461,17 @@ final class Contacts extends Resource
     public function list(array $params = []): Result
     {
         return $this->http->request("GET", "/contacts", $params);
+    }
+
+    /**
+     * Iterate every row of /contacts across pages (lazily, as a Generator).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function listAll(array $params = []): \Generator
+    {
+        return $this->paginate("/contacts", $params);
     }
 
     /** @param array<string, mixed> $body */
@@ -399,6 +527,17 @@ final class ContactFields extends Resource
         return $this->http->request("GET", "/contact-fields", $params);
     }
 
+    /**
+     * Iterate every row of /contact-fields across pages (lazily, as a Generator).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function listAll(array $params = []): \Generator
+    {
+        return $this->paginate("/contact-fields", $params);
+    }
+
     /** @param array<string, mixed> $body */
     public function create(array $body): Result
     {
@@ -443,6 +582,17 @@ final class Segments extends Resource
     public function list(array $params = []): Result
     {
         return $this->http->request("GET", "/segments", $params);
+    }
+
+    /**
+     * Iterate every row of /segments across pages (lazily, as a Generator).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function listAll(array $params = []): \Generator
+    {
+        return $this->paginate("/segments", $params);
     }
 
     /** @param array<string, mixed> $body */
@@ -493,6 +643,17 @@ final class Topics extends Resource
         return $this->http->request("GET", "/email/topics", $params);
     }
 
+    /**
+     * Iterate every row of /email/topics across pages (lazily, as a Generator).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function listAll(array $params = []): \Generator
+    {
+        return $this->paginate("/email/topics", $params);
+    }
+
     /** @param array<string, mixed> $body */
     public function create(array $body): Result
     {
@@ -536,6 +697,17 @@ final class Campaigns extends Resource
         return $this->http->request("GET", "/email/campaigns", $params);
     }
 
+    /**
+     * Iterate every row of /email/campaigns across pages (lazily, as a Generator).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function listAll(array $params = []): \Generator
+    {
+        return $this->paginate("/email/campaigns", $params);
+    }
+
     /** @param array<string, mixed> $body */
     public function create(array $body): Result
     {
@@ -558,9 +730,15 @@ final class Campaigns extends Resource
         return $this->http->request("DELETE", "/email/campaigns/" . enc($id));
     }
 
-    public function send(string $id): Result
+    /**
+     * @param array<string, mixed> $body `scheduled_at` (ISO 8601) schedules the draft, `null` sends now;
+     *                                   omit to arm its saved send time while still ahead (otherwise it sends now).
+     */
+    public function send(string $id, array $body = []): Result
     {
-        return $this->http->request("POST", "/email/campaigns/" . enc($id) . "/send");
+        // Always a JSON object: json_encode([]) is `[]`, which the endpoint
+        // rejects (422). `(object)` turns the default into `{}`.
+        return $this->http->request("POST", "/email/campaigns/" . enc($id) . "/send", null, (object) $body);
     }
 
     public function cancel(string $id): Result
@@ -598,6 +776,17 @@ final class Templates extends Resource
         return $this->http->request("GET", "/email/templates", $params);
     }
 
+    /**
+     * Iterate every row of /email/templates across pages (lazily, as a Generator).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function listAll(array $params = []): \Generator
+    {
+        return $this->paginate("/email/templates", $params);
+    }
+
     /** @param array<string, mixed> $body */
     public function create(array $body): Result
     {
@@ -618,6 +807,16 @@ final class Templates extends Resource
     public function delete(string $id): Result
     {
         return $this->http->request("DELETE", "/email/templates/" . enc($id));
+    }
+
+    /**
+     * Send ONE test of the template to $body['to'] with sample variables.
+     *
+     * @param array<string, mixed> $body
+     */
+    public function testSend(string $id, array $body): Result
+    {
+        return $this->http->request("POST", "/email/templates/" . enc($id) . "/test-send", null, $body);
     }
 }
 
@@ -641,6 +840,17 @@ final class Domains extends Resource
     public function list(array $params = []): Result
     {
         return $this->http->request("GET", "/email/domains", $params);
+    }
+
+    /**
+     * Iterate every row of /email/domains across pages (lazily, as a Generator).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function listAll(array $params = []): \Generator
+    {
+        return $this->paginate("/email/domains", $params);
     }
 
     /** @param array<string, mixed> $body */
@@ -669,6 +879,12 @@ final class Domains extends Resource
     {
         return $this->http->request("POST", "/email/domains/" . enc($id) . "/verify");
     }
+
+    /** Read-only DNS diagnosis: per-record answers and ranked findings with fixes. */
+    public function diagnose(string $id): Result
+    {
+        return $this->http->request("GET", "/email/domains/" . enc($id) . "/diagnose");
+    }
 }
 
 final class Webhooks extends Resource
@@ -677,6 +893,17 @@ final class Webhooks extends Resource
     public function list(array $params = []): Result
     {
         return $this->http->request("GET", "/webhooks", $params);
+    }
+
+    /**
+     * Iterate every row of /webhooks across pages (lazily, as a Generator).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function listAll(array $params = []): \Generator
+    {
+        return $this->paginate("/webhooks", $params);
     }
 
     /** @param array<string, mixed> $body */
@@ -706,6 +933,29 @@ final class Webhooks extends Resource
         return $this->http->request("POST", "/webhooks/" . enc($id) . "/test");
     }
 
+    /** New signing secret, returned once; the old one co-signs for 24 h. */
+    public function rotateSecret(string $id): Result
+    {
+        return $this->http->request("POST", "/webhooks/" . enc($id) . "/rotate-secret");
+    }
+
+    /** @param array<string, mixed> $params */
+    public function listDeliveries(string $id, array $params = []): Result
+    {
+        return $this->http->request("GET", "/webhooks/" . enc($id) . "/deliveries", $params);
+    }
+
+    /**
+     * Iterate every delivery of the endpoint (lazily, as a Generator).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function listAllDeliveries(string $id, array $params = []): \Generator
+    {
+        return $this->paginate("/webhooks/" . enc($id) . "/deliveries", $params);
+    }
+
     /** @param array<string, string> $headers */
     public function verify(string $payload, string $secret, array $headers, int $toleranceSeconds = 300): mixed
     {
@@ -719,6 +969,17 @@ final class ApiKeys extends Resource
     public function list(array $params = []): Result
     {
         return $this->http->request("GET", "/api-keys", $params);
+    }
+
+    /**
+     * Iterate every row of /api-keys across pages (lazily, as a Generator).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function listAll(array $params = []): \Generator
+    {
+        return $this->paginate("/api-keys", $params);
     }
 
     /** @param array<string, mixed> $body */
@@ -739,6 +1000,17 @@ final class Suppressions extends Resource
     public function list(array $params = []): Result
     {
         return $this->http->request("GET", "/suppressions", $params);
+    }
+
+    /**
+     * Iterate every row of /suppressions across pages (lazily, as a Generator).
+     *
+     * @param array<string, mixed> $params
+     * @return \Generator<int, array<string, mixed>>
+     */
+    public function listAll(array $params = []): \Generator
+    {
+        return $this->paginate("/suppressions", $params);
     }
 
     /** @param array<string, mixed> $body */

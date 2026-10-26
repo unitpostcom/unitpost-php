@@ -25,6 +25,21 @@ final class UnitpostError
 }
 
 /**
+ * Thrown only where a Result cannot carry the error: a failed page request in
+ * a listAll() generator. $error is the same typed UnitpostError a Result holds.
+ */
+final class UnitpostException extends \RuntimeException
+{
+    public UnitpostError $error;
+
+    public function __construct(UnitpostError $error)
+    {
+        parent::__construct($error->message, $error->status);
+        $this->error = $error;
+    }
+}
+
+/**
  * @template T
  */
 final class Result

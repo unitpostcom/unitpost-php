@@ -60,9 +60,35 @@ final class Sms
     public readonly ?string $body;
 
     /**
+     * Billed units. Outbound: segments. Inbound: 1 when the received text was
+     * charged (1¢ in the US and Canada), else 0.
      * @var int
      */
     public readonly int $segments;
+
+    /**
+     * Inbound only: your text this reply answers (`sms_…`), when the carrier
+     * says which. Null otherwise.
+     * @var ?string
+     */
+    public readonly ?string $inReplyTo;
+
+    /**
+     * Inbound only: when the reply reached Unitpost. Order a conversation by
+     * this; carriers don't guarantee order. Null on outbound.
+     * @var ?string
+     */
+    public readonly ?string $receivedAt;
+
+    /**
+     * Inbound only: the text reads like a request to stop texting ("please
+     * stop texting me") but was not an opt-out keyword, so no opt-out was
+     * recorded. Decide whether to record one (POST
+     * /v1/contacts/{id}/sms-consent, action opt_out). False for an exact
+     * keyword such as STOP (already recorded) and on outbound.
+     * @var bool
+     */
+    public readonly bool $looksLikeOptOut;
 
     /**
      * @var ?string
@@ -102,6 +128,9 @@ final class Sms
         string $type,
         ?string $body,
         int $segments,
+        ?string $inReplyTo,
+        ?string $receivedAt,
+        bool $looksLikeOptOut,
         ?string $country,
         ?string $scheduledAt,
         ?string $lastError,
@@ -117,6 +146,9 @@ final class Sms
         $this->type = $type;
         $this->body = $body;
         $this->segments = $segments;
+        $this->inReplyTo = $inReplyTo;
+        $this->receivedAt = $receivedAt;
+        $this->looksLikeOptOut = $looksLikeOptOut;
         $this->country = $country;
         $this->scheduledAt = $scheduledAt;
         $this->lastError = $lastError;
@@ -141,6 +173,9 @@ final class Sms
             (string) $data["type"],
             isset($data["body"]) ? (string) $data["body"] : null,
             (int) $data["segments"],
+            isset($data["in_reply_to"]) ? (string) $data["in_reply_to"] : null,
+            isset($data["received_at"]) ? (string) $data["received_at"] : null,
+            (bool) $data["looks_like_opt_out"],
             isset($data["country"]) ? (string) $data["country"] : null,
             isset($data["scheduled_at"]) ? (string) $data["scheduled_at"] : null,
             isset($data["last_error"]) ? (string) $data["last_error"] : null,

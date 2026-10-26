@@ -3,7 +3,7 @@
   "description": "Official Unitpost SDK for PHP — send email and manage contacts, segments, campaigns, templates, domains, webhooks, and suppressions.",
   "type": "library",
   "license": "MIT",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "homepage": "https://www.unitpost.com/docs",
   "support": {
     "issues": "https://github.com/unitpostcom/unitpost-php/issues",
