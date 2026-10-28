@@ -33,6 +33,17 @@ $client->email->batch($emails, 'digest-2026-10-24');
 $client->sms->send($sms, 'otp-5678');
 ```
 
+## Retries
+
+Transient failures are retried automatically: `429`, `5xx` and transport errors (timeouts, network failures) are retried up to `maxRetries` times (default `2`, so 3 attempts in all). When the error response carries a `Retry-After` header (a `429` always does), the client waits that long, read as seconds or an HTTP date and capped at `maxRetryDelay`. Otherwise it waits with exponential backoff and full jitter: a random time up to `retryBaseDelay` × 2^attempt, also capped at `maxRetryDelay`. Client errors (`401`/`403`/`404`/`409`/`422`) are never retried.
+
+Only requests that are safe to replay are retried: `GET`s and writes that carry an idempotency key (`email->send`, `email->batch` and `sms->send` always do, see above). Any other write without a key is sent once.
+
+```php
+// Defaults shown, delays in milliseconds. 'maxRetries' => 0 turns retries off.
+$unitpost = new Client(['maxRetries' => 2, 'retryBaseDelay' => 500, 'maxRetryDelay' => 20_000]);
+```
+
 ## Pagination
 
 List endpoints are cursor-paginated. `list` returns one page; the iterator below walks every page, following `has_more` with the last row's `id` as the next `after` cursor. Filters you pass ride along on every page. `listAll()` is a `Generator`; a failed page throws `Unitpost\UnitpostException` (its `->error` is the usual `UnitpostError`).

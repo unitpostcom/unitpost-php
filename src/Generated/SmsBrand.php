@@ -102,6 +102,74 @@ final class SmsBrand
      */
     public readonly string $createdAt;
 
+    /**
+     * The name the business trades under, when it isn't the legal name.
+     * @var ?string
+     */
+    public readonly ?string $dbaName;
+
+    /**
+     * The one Sender ID the brand sends under abroad (1–11 characters).
+     * @var ?string
+     */
+    public readonly ?string $senderIdName;
+
+    /**
+     * The brand's industry, in the carriers' words (e.g. `RETAIL`).
+     * @var ?string
+     */
+    public readonly ?string $vertical;
+
+    /**
+     * `PRIVATE_PROFIT`, `PUBLIC_PROFIT`, `NON_PROFIT`, `GOVERNMENT`, …
+     * @var ?string
+     */
+    public readonly ?string $legalOrganizationType;
+
+    /**
+     * @var ?string
+     */
+    public readonly ?string $registrationNumberType;
+
+    /**
+     * @var ?string
+     */
+    public readonly ?string $taxCountry;
+
+    /**
+     * @var ?string
+     */
+    public readonly ?string $stockSymbol;
+
+    /**
+     * @var ?string
+     */
+    public readonly ?string $stockExchange;
+
+    /**
+     * Who carriers reach about the brand (the email is `contact_email`).
+     * @var ?SmsBrandContact
+     */
+    public readonly ?SmsBrandContact $contact;
+
+    /**
+     * The registered business address.
+     * @var ?SmsBrandAddress
+     */
+    public readonly ?SmsBrandAddress $address;
+
+    /**
+     * Moves on every material change; a registration keeps the revision it was
+     * submitted with.
+     * @var ?int
+     */
+    public readonly ?int $revision;
+
+    /**
+     * @var ?string
+     */
+    public readonly ?string $archivedAt;
+
     public function __construct(
         string $object,
         string $id,
@@ -116,7 +184,19 @@ final class SmsBrand
         bool $taxIdOnFile,
         int $numberCount,
         bool $editable,
-        string $createdAt
+        string $createdAt,
+        ?string $dbaName = null,
+        ?string $senderIdName = null,
+        ?string $vertical = null,
+        ?string $legalOrganizationType = null,
+        ?string $registrationNumberType = null,
+        ?string $taxCountry = null,
+        ?string $stockSymbol = null,
+        ?string $stockExchange = null,
+        ?SmsBrandContact $contact = null,
+        ?SmsBrandAddress $address = null,
+        ?int $revision = null,
+        ?string $archivedAt = null
     ) {
         $this->object = $object;
         $this->id = $id;
@@ -132,6 +212,18 @@ final class SmsBrand
         $this->numberCount = $numberCount;
         $this->editable = $editable;
         $this->createdAt = $createdAt;
+        $this->dbaName = $dbaName;
+        $this->senderIdName = $senderIdName;
+        $this->vertical = $vertical;
+        $this->legalOrganizationType = $legalOrganizationType;
+        $this->registrationNumberType = $registrationNumberType;
+        $this->taxCountry = $taxCountry;
+        $this->stockSymbol = $stockSymbol;
+        $this->stockExchange = $stockExchange;
+        $this->contact = $contact;
+        $this->address = $address;
+        $this->revision = $revision;
+        $this->archivedAt = $archivedAt;
     }
 
     /**
@@ -155,7 +247,19 @@ final class SmsBrand
             (bool) $data["tax_id_on_file"],
             (int) $data["number_count"],
             (bool) $data["editable"],
-            (string) $data["created_at"]
+            (string) $data["created_at"],
+            isset($data["dba_name"]) ? (string) $data["dba_name"] : null,
+            isset($data["sender_id_name"]) ? (string) $data["sender_id_name"] : null,
+            isset($data["vertical"]) ? (string) $data["vertical"] : null,
+            isset($data["legal_organization_type"]) ? (string) $data["legal_organization_type"] : null,
+            isset($data["registration_number_type"]) ? (string) $data["registration_number_type"] : null,
+            isset($data["tax_country"]) ? (string) $data["tax_country"] : null,
+            isset($data["stock_symbol"]) ? (string) $data["stock_symbol"] : null,
+            isset($data["stock_exchange"]) ? (string) $data["stock_exchange"] : null,
+            isset($data["contact"]) ? SmsBrandContact::fromArray($data["contact"]) : null,
+            isset($data["address"]) ? SmsBrandAddress::fromArray($data["address"]) : null,
+            isset($data["revision"]) ? (int) $data["revision"] : null,
+            isset($data["archived_at"]) ? (string) $data["archived_at"] : null
         );
     }
 }

@@ -6,6 +6,7 @@ namespace Unitpost\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Unitpost\Client;
+use Unitpost\Generated\SmsBrand;
 use Unitpost\WebhookVerificationError;
 use function Unitpost\verifyWebhook;
 
@@ -207,5 +208,21 @@ final class SdkTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessageMatches('/pages forward only/');
         $client->contacts->listAll(['before' => 'con_9']);
+    }
+
+    public function testSmsBrandKeepsItsEarlierConstructor(): void
+    {
+        // Positional, as code written against 0.4.0 calls it: the fields added
+        // since default to null, and so they do on an older payload.
+        $brand = new SmsBrand('sms_brand', 'sbrand_1', 'Acme', 'Acme Inc', null, null, null, 'ready', [], false, false, 0, true, '2026-10-01T00:00:00.000Z');
+        $this->assertSame('2026-10-01T00:00:00.000Z', $brand->createdAt);
+        $this->assertNull($brand->revision);
+        $read = SmsBrand::fromArray([
+            'object' => 'sms_brand', 'id' => 'sbrand_1', 'name' => 'Acme', 'legal_name' => 'Acme Inc',
+            'status' => 'ready', 'missing' => [], 'ten_dlc_verified' => false, 'tax_id_on_file' => false,
+            'number_count' => 0, 'editable' => true, 'created_at' => '2026-10-01T00:00:00.000Z',
+        ]);
+        $this->assertSame('Acme Inc', $read->legalName);
+        $this->assertNull($read->contact);
     }
 }

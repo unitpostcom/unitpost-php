@@ -23,8 +23,16 @@ final class Client
     public ContactFields $contactFields;
     public Segments $segments;
     public BrandKits $brandKits;
+    /** The image library templates embed (`/img/…` paths). */
+    public LibraryImages $libraryImages;
+    /** The email footer and unsubscribe page look. Writes need `branding:write` (on no key preset). */
+    public Branding $branding;
+    /** Who is calling (`whoami`, any credential), the activity log (`listActivity`, needs `activity:read`, on no key preset), and the workspace's name and image; the writes need `branding:write` (on no key preset). */
+    public Workspace $workspace;
     public Webhooks $webhooks;
     public ApiKeys $apiKeys;
+    /** The API request log (`list()`, needs `apikeys:read`, on no key preset). */
+    public Logs $logs;
     public Suppressions $suppressions;
     public Jobs $jobs;
     public Usage $usage;
@@ -39,8 +47,12 @@ final class Client
         $this->contactFields = new ContactFields($http);
         $this->segments = new Segments($http);
         $this->brandKits = new BrandKits($http);
+        $this->libraryImages = new LibraryImages($http);
+        $this->branding = new Branding($http);
+        $this->workspace = new Workspace($http);
         $this->webhooks = new Webhooks($http);
         $this->apiKeys = new ApiKeys($http);
+        $this->logs = new Logs($http);
         $this->suppressions = new Suppressions($http);
         $this->jobs = new Jobs($http);
         $this->usage = new Usage($http);
