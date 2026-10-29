@@ -101,7 +101,8 @@ final class Sms
     public readonly ?string $scheduledAt;
 
     /**
-     * Legacy free-text error. Prefer `error.code`.
+     * The sentence for why the text failed or was skipped. Match on
+     * `failure_code` (failed) or `error.code` (suppressed), not on this text.
      * @var ?string
      */
     public readonly ?string $lastError;
@@ -117,6 +118,25 @@ final class Sms
      * @var string
      */
     public readonly string $createdAt;
+
+    /**
+     * Set on `failed` messages: why it failed, as a stable code (the sentence
+     * is `last_error`). Null otherwise. Only `carrier_undelivered` (the
+     * carrier accepted the text, then could not deliver it) is billed; every
+     * other failure is not charged. Billing when a scheduled text was due:
+     * `quota_exceeded`, `overage_cap_exceeded`, `subscription_inactive`;
+     * `unsupported_country`: SMS to the country was paused; workspace holds:
+     * `workspace_suspended`, `sms_brand_blocked`; the sender:
+     * `sender_not_active`, `sender_registration_incomplete`,
+     * `sender_action_required`, `sender_use_case_mismatch`;
+     * `quiet_hours_unsatisfiable`: marketing that could not go out inside the
+     * recipient's window; ours: `channel_unavailable`, `delivery_exhausted`;
+     * `provider_rejected`: refused before any carrier; `suspected_pumping`:
+     * stopped before the carrier as suspected SMS pumping. The same code is
+     * `failed.code` on the `sms.failed` webhook.
+     * @var ?string
+     */
+    public readonly ?string $failureCode;
 
     public function __construct(
         string $object,
@@ -135,7 +155,8 @@ final class Sms
         ?string $scheduledAt,
         ?string $lastError,
         ?SmsError $error,
-        string $createdAt
+        string $createdAt,
+        ?string $failureCode = null
     ) {
         $this->object = $object;
         $this->id = $id;
@@ -154,6 +175,7 @@ final class Sms
         $this->lastError = $lastError;
         $this->error = $error;
         $this->createdAt = $createdAt;
+        $this->failureCode = $failureCode;
     }
 
     /**
@@ -180,7 +202,8 @@ final class Sms
             isset($data["scheduled_at"]) ? (string) $data["scheduled_at"] : null,
             isset($data["last_error"]) ? (string) $data["last_error"] : null,
             isset($data["error"]) ? SmsError::fromArray($data["error"]) : null,
-            (string) $data["created_at"]
+            (string) $data["created_at"],
+            isset($data["failure_code"]) ? (string) $data["failure_code"] : null
         );
     }
 }
