@@ -10,10 +10,15 @@ final class UnitpostError
     public string $message;
     public int $status;
     public ?string $requestId;
-    /** @var list<array{field?: string, message?: string}> */
+    /**
+     * Per-field problems; `code` is a machine-readable reason for the entry,
+     * e.g. the SMS skip word on `to` (`out_of_reach`).
+     *
+     * @var list<array{field?: string, code?: string, message?: string}>
+     */
     public array $details;
 
-    /** @param list<array{field?: string, message?: string}> $details */
+    /** @param list<array{field?: string, code?: string, message?: string}> $details */
     public function __construct(string $code, string $message, int $status, ?string $requestId, array $details = [])
     {
         $this->code = $code;

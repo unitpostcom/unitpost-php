@@ -9,6 +9,9 @@ change that bumps the version (docs/sdk/RELEASING.md).
 
 ## Unreleased
 
+- The `UnitpostError::$details` shape declares the optional `code`, a
+  machine-readable reason for the entry, such as the SMS skip word on `to`
+  (`out_of_reach`).
 - The SMS list takes `sender_id`, a number's `snum_…` id: that number's
   texts, both directions. A value it can't apply is ignored and named in the
   `Unitpost-Warning` response header; `Unitpost-Strict: true` refuses it.
