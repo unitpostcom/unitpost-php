@@ -69,6 +69,33 @@ final class SdkTest extends TestCase
         $this->assertSame(422, $result->error->status);
     }
 
+    public function testMaintenance503ReachesTheCaller(): void
+    {
+        // A planned maintenance window: the edge answers every request with this
+        // 503. A keyless write is not retried, and the body's code and message
+        // reach the caller unchanged (no generic 5xx error).
+        $message = 'Unitpost is down for scheduled maintenance. Retry after the Retry-After header; https://status.unitpost.com shows the expected end of the window.';
+        $calls = 0;
+        $client = new Client([
+            'apiKey' => 'test_key',
+            'baseUrl' => 'https://api.test',
+            'handler' => function () use (&$calls, $message) {
+                $calls++;
+                return [
+                    'status' => 503,
+                    'headers' => ['retry-after' => '300'],
+                    'body' => json_encode(['error' => ['code' => 'maintenance', 'message' => $message]]),
+                ];
+            },
+        ]);
+        $result = $client->contacts->create(['email' => 'x@test.com']);
+        $this->assertNull($result->data);
+        $this->assertSame('maintenance', $result->error->code);
+        $this->assertSame($message, $result->error->message);
+        $this->assertSame(503, $result->error->status);
+        $this->assertSame(1, $calls);
+    }
+
     public function testVerifyWebhookGoldenVector(): void
     {
         $body = '{"type":"email.delivered","created_at":"2023-11-14T22:13:20.000Z","data":{"id":"em_golden_1"}}';
