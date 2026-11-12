@@ -60,8 +60,10 @@ final class Sms
     public readonly ?string $body;
 
     /**
-     * Billed units. Outbound: segments. Inbound: 1 when the received text was
-     * charged (1¢ in the US and Canada), else 0.
+     * Billed units. Outbound: segments. Inbound: the received text's segments
+     * when it was charged ($0.008 a segment in the US and $0.004 in Canada; a
+     * text charged before per-segment pricing was 1¢ flat and shows 1), else
+     * 0.
      * @var int
      */
     public readonly int $segments;

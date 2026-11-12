@@ -1142,7 +1142,7 @@ final class Operations
             'httpMethod' => "GET",
             'path' => "/email/received",
             'pathParams' => [],
-            'queryParams' => ["limit", "after", "before"],
+            'queryParams' => ["limit", "after", "before", "to", "thread_id", "created_after", "created_before"],
             'hasBody' => false,
             'requestSchema' => null,
             'responseSchema' => null,

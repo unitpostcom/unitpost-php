@@ -67,10 +67,10 @@ final class SmsNumber
 
     /**
      * Whether people can text this number: once it is active, a text to it
-     * fires the `sms.received` webhook and costs 1¢. True for US toll-free and
-     * 10DLC numbers and Canadian long codes (two-way is offered in the US and
-     * Canada only); false for Sender IDs, which are one-way, and for the
-     * simulator.
+     * fires the `sms.received` webhook and costs $0.008 a segment in the US
+     * and $0.004 in Canada. True for US toll-free and 10DLC numbers and
+     * Canadian long codes (two-way is offered in the US and Canada only);
+     * false for Sender IDs, which are one-way, and for the simulator.
      * @var bool
      */
     public readonly bool $twoWay;
