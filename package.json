@@ -5,6 +5,6 @@
   "private": true,
   "scripts": {
     "test": "if command -v php >/dev/null 2>&1 && [ -f vendor/bin/phpunit ]; then php vendor/bin/phpunit --colors=never; else echo 'skip: php or vendor/bin/phpunit not available (composer install runs in the dedicated sdks CI job)'; fi",
-    "build": "echo 'php sdk: composer package, built in publish-sdk-php.yml'"
+    "build": "echo 'php sdk: composer package, built in publish-sdk.yml (php)'"
   }
 }

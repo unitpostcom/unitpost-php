@@ -121,6 +121,15 @@ final class SmsNumber
      */
     public readonly string $createdAt;
 
+    /**
+     * What carriers sent back, item by item, when a toll-free verification
+     * needs changes (`action_required`); null otherwise. Fix it on the brand
+     * or the messaging program, then POST /sms/numbers/{id}/resubmit
+     * (ADR-0159).
+     * @var ?list<SmsNumberFeedbackItem>
+     */
+    public readonly ?array $feedback;
+
     public function __construct(
         string $object,
         string $id,
@@ -135,7 +144,8 @@ final class SmsNumber
         ?SmsNumberUseCase $useCase,
         ?string $actionRequiredReason,
         ?SmsNumberSenderIdGroup $senderIdGroup,
-        string $createdAt
+        string $createdAt,
+        ?array $feedback = null
     ) {
         $this->object = $object;
         $this->id = $id;
@@ -151,6 +161,7 @@ final class SmsNumber
         $this->actionRequiredReason = $actionRequiredReason;
         $this->senderIdGroup = $senderIdGroup;
         $this->createdAt = $createdAt;
+        $this->feedback = $feedback;
     }
 
     /**
@@ -174,7 +185,8 @@ final class SmsNumber
             isset($data["use_case"]) ? SmsNumberUseCase::fromArray($data["use_case"]) : null,
             isset($data["action_required_reason"]) ? (string) $data["action_required_reason"] : null,
             isset($data["sender_id_group"]) ? SmsNumberSenderIdGroup::fromArray($data["sender_id_group"]) : null,
-            (string) $data["created_at"]
+            (string) $data["created_at"],
+            array_map(static fn (array $x): SmsNumberFeedbackItem => SmsNumberFeedbackItem::fromArray($x), $data["feedback"] ?? [])
         );
     }
 }

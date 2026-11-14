@@ -19,6 +19,7 @@ final class SmsFailureCode
     public const QUOTA_EXCEEDED = "quota_exceeded";
     public const OVERAGE_CAP_EXCEEDED = "overage_cap_exceeded";
     public const SUBSCRIPTION_INACTIVE = "subscription_inactive";
+    public const SMS_NOT_IN_PLAN = "sms_not_in_plan";
     public const UNSUPPORTED_COUNTRY = "unsupported_country";
     public const WORKSPACE_SUSPENDED = "workspace_suspended";
     public const SMS_BRAND_BLOCKED = "sms_brand_blocked";
@@ -34,5 +35,5 @@ final class SmsFailureCode
     public const SUSPECTED_PUMPING = "suspected_pumping";
 
     /** @var list<string> */
-    public const ALL = [self::QUOTA_EXCEEDED, self::OVERAGE_CAP_EXCEEDED, self::SUBSCRIPTION_INACTIVE, self::UNSUPPORTED_COUNTRY, self::WORKSPACE_SUSPENDED, self::SMS_BRAND_BLOCKED, self::SENDER_NOT_ACTIVE, self::SENDER_REGISTRATION_INCOMPLETE, self::SENDER_ACTION_REQUIRED, self::SENDER_USE_CASE_MISMATCH, self::QUIET_HOURS_UNSATISFIABLE, self::CHANNEL_UNAVAILABLE, self::DELIVERY_EXHAUSTED, self::PROVIDER_REJECTED, self::CARRIER_UNDELIVERED, self::SUSPECTED_PUMPING];
+    public const ALL = [self::QUOTA_EXCEEDED, self::OVERAGE_CAP_EXCEEDED, self::SUBSCRIPTION_INACTIVE, self::SMS_NOT_IN_PLAN, self::UNSUPPORTED_COUNTRY, self::WORKSPACE_SUSPENDED, self::SMS_BRAND_BLOCKED, self::SENDER_NOT_ACTIVE, self::SENDER_REGISTRATION_INCOMPLETE, self::SENDER_ACTION_REQUIRED, self::SENDER_USE_CASE_MISMATCH, self::QUIET_HOURS_UNSATISFIABLE, self::CHANNEL_UNAVAILABLE, self::DELIVERY_EXHAUSTED, self::PROVIDER_REJECTED, self::CARRIER_UNDELIVERED, self::SUSPECTED_PUMPING];
 }

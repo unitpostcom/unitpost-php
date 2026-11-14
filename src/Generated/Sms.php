@@ -126,9 +126,10 @@ final class Sms
      * is `last_error`). Null otherwise. Only `carrier_undelivered` (the
      * carrier accepted the text, then could not deliver it) is billed; every
      * other failure is not charged. Billing when a scheduled text was due:
-     * `quota_exceeded`, `overage_cap_exceeded`, `subscription_inactive`;
-     * `unsupported_country`: SMS to the country was paused; workspace holds:
-     * `workspace_suspended`, `sms_brand_blocked`; the sender:
+     * `quota_exceeded`, `overage_cap_exceeded`, `subscription_inactive`,
+     * `sms_not_in_plan` (the paid plan ended and its grace is over, or it is
+     * 100% discounted); `unsupported_country`: SMS to the country was paused;
+     * workspace holds: `workspace_suspended`, `sms_brand_blocked`; the sender:
      * `sender_not_active`, `sender_registration_incomplete`,
      * `sender_action_required`, `sender_use_case_mismatch`;
      * `quiet_hours_unsatisfiable`: marketing that could not go out inside the

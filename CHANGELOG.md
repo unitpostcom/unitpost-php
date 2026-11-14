@@ -9,6 +9,27 @@ change that bumps the version (docs/sdk/RELEASING.md).
 
 ## Unreleased
 
+- `SmsFailureCode` gains `sms_not_in_plan`: SMS wasn't on the plan when a text was due (the paid plan ended after its grace, or the plan is 100% discounted). Not charged.
+- SMS numbers and registrations, start to finish (ADR-0160, 2026-11-12):
+  `sms->getNumber($id)`, `sms->releaseNumber($id, ['force' => true],
+  $idempotencyKey)` (permanent), `sms->registrations->get($id)`,
+  `->remove($id)` (a 10DLC setup with no number) and `->replace($id)` (an
+  approved brand registration).
+- Files and SMS onboarding by API (ADR-0159, 2026-11-12):
+  - `files` (new): `list(['purpose' => ...])`, `create($body,
+    $idempotencyKey)`, `get($id)`, `delete($id)`. A file (`file_` id) is
+    bytes handed to the API for one `purpose` (`sms_opt_in_evidence`,
+    `sms_document`, `image`) from a `url`, base64 `data`, or an upload
+    session, used by `file_id` and expiring after 24 hours.
+  - `sms`: a brand's documents (`listBrandDocuments($brandId)`,
+    `addBrandDocument($brandId, $body, $idempotencyKey)`,
+    `getBrandDocument`, `removeBrandDocument`, and `brandDocumentUrl`, a
+    5-minute signed link), and `resubmitNumber($numberId, $body,
+    $idempotencyKey)` for a toll-free verification carriers sent back.
+  - `sms->registrations`: `resubmit($id, $body, $idempotencyKey)` for a 10DLC
+    campaign carriers sent back, and `requestNumber($id, [],
+    $idempotencyKey)` to retry a failed number whose fee is committed.
+  - Every new write mints an Idempotency-Key when you don't pass one.
 - The `UnitpostError::$details` shape declares the optional `code`, a
   machine-readable reason for the entry, such as the SMS skip word on `to`
   (`out_of_reach`).

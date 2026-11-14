@@ -81,13 +81,15 @@ final class Sms extends Resource
     public SmsCampaigns $campaigns;
     public SmsTopics $topics;
     // SMS setup. Carrier purchases go through $quotes (a price, then a
-    // confirm with the opt-in `sms:purchase` scope); releasing a number,
-    // identity documents and toll-free verification stay in the dashboard.
+    // confirm with the opt-in `sms:purchase` scope); a brand's documents and
+    // the carrier send-backs work here too (ADR-0159), and so do releasing a
+    // number, removing a 10DLC setup and replacing a brand registration
+    // (ADR-0160).
     public SmsMessagingPrograms $messagingPrograms;
     public SmsTestDestinations $testDestinations;
     public SmsConsentSetups $consentSetups;
     public SmsBilling $billing;
-    // Registrations are read-only.
+    // Registrations, their review state, and fixing what carriers sent back.
     public SmsRegistrations $registrations;
     // Buy carrier resources: price an order, then confirm it.
     public SmsQuotes $quotes;
@@ -216,20 +218,111 @@ final class Sms extends Resource
     }
 
     /**
+     * A brand's documents (`sdoc_` ids): the files and numbers a country's
+     * carriers ask for, one per slot (`kind`, plus `carrier` / `country` for a
+     * variant). Needs `sms:read`.
+     */
+    public function listBrandDocuments(string $brandId): Result
+    {
+        return $this->http->request("GET", "/sms/brands/" . enc($brandId) . "/documents");
+    }
+
+    /**
+     * Add a document to a brand's slot (201): a file kind takes `file_id` (a
+     * file from `$files->create`, purpose `sms_document`, or
+     * `sms_opt_in_evidence` for `opt_in_screenshot`), a text kind takes
+     * `text`. A document in an occupied slot replaces the current one. Needs
+     * `sms:manage`. Pass $idempotencyKey so a retry adds one document;
+     * omitted, the SDK mints one.
+     *
+     * @param array<string, mixed> $body `kind`, `file_id` or `text`, and an optional `carrier` / `country`.
+     */
+    public function addBrandDocument(string $brandId, array $body, ?string $idempotencyKey = null): Result
+    {
+        return $this->http->request("POST", "/sms/brands/" . enc($brandId) . "/documents", null, $body, $idempotencyKey ?? bin2hex(random_bytes(16)));
+    }
+
+    /** One brand document. Needs `sms:read`. */
+    public function getBrandDocument(string $brandId, string $documentId): Result
+    {
+        return $this->http->request("GET", "/sms/brands/" . enc($brandId) . "/documents/" . enc($documentId));
+    }
+
+    /** Remove a brand document from its slot. Needs `sms:manage`. */
+    public function removeBrandDocument(string $brandId, string $documentId): Result
+    {
+        return $this->http->request("DELETE", "/sms/brands/" . enc($brandId) . "/documents/" . enc($documentId));
+    }
+
+    /**
+     * A 5-minute signed link to a file document's bytes. The link is a bearer
+     * credential: fetch it yourself, don't log or share it. An identity
+     * document needs `sms:manage`; the rest `sms:read`.
+     */
+    public function brandDocumentUrl(string $brandId, string $documentId): Result
+    {
+        return $this->http->request("GET", "/sms/brands/" . enc($brandId) . "/documents/" . enc($documentId) . "/url");
+    }
+
+    /**
      * List SMS phone numbers.
      *
      * Only numbers with `status: "active"` can send. A `ten_dlc` number has no
      * `phone_number` until carriers approve it, and a `simulator` number only
      * reaches verified test destinations.
      *
-     * Order a number through `$sms->quotes`; releasing one stays in the
-     * dashboard.
+     * Order a number through `$sms->quotes`; release one with
+     * `releaseNumber`.
      *
      * @param array<string, mixed> $params
      */
     public function numbers(array $params = []): Result
     {
         return $this->http->request("GET", "/sms/numbers", $params);
+    }
+
+    /**
+     * One number, or one country of a Sender ID (`snum_…`), as `numbers`
+     * reads it: its status, what carriers sent back (`feedback`) and its use
+     * case. Read a resubmit, a retry or a release back with it. Needs
+     * `sms:read`.
+     */
+    public function getNumber(string $numberId): Result
+    {
+        return $this->http->request("GET", "/sms/numbers/" . enc($numberId));
+    }
+
+    /**
+     * Release a number, or one country of a Sender ID, back to the carrier.
+     * PERMANENT: it stops sending at once, reads `released` from then on and
+     * can't be had back; its monthly fee ends with it (no proration), and a
+     * 10DLC number's campaign registration goes with it. Refused while an
+     * automation uses it (409 `resource_in_use`) and, unless `force` is true,
+     * while campaigns are scheduled on it or texts are queued through it (409
+     * `sender_release_blocked`, counts in `error.blockers`). Releasing a
+     * released number answers it. Needs `sms:manage`. Pass $idempotencyKey so
+     * a retry releases once; omitted, the SDK mints one.
+     *
+     * @param array<string, mixed> $body `force` (bool); sent as `{}` when empty.
+     */
+    public function releaseNumber(string $numberId, array $body = [], ?string $idempotencyKey = null): Result
+    {
+        return $this->http->request("POST", "/sms/numbers/" . enc($numberId) . "/release", null, (object) $body, $idempotencyKey ?? bin2hex(random_bytes(16)));
+    }
+
+    /**
+     * Resubmit a toll-free verification carriers sent back (free): fix what
+     * the number's `feedback` names, then send the new evidence
+     * (`opt_in_evidence_file_id`, or `reuse_opt_in_evidence`), a
+     * `business_registration_document_file_id`, `consent_source_url`, or
+     * `acknowledge_unchanged`. Needs `sms:manage`. Pass $idempotencyKey so a
+     * retry resubmits once; omitted, the SDK mints one.
+     *
+     * @param array<string, mixed> $body
+     */
+    public function resubmitNumber(string $numberId, array $body, ?string $idempotencyKey = null): Result
+    {
+        return $this->http->request("POST", "/sms/numbers/" . enc($numberId) . "/resubmit", null, (object) $body, $idempotencyKey ?? bin2hex(random_bytes(16)));
     }
 
     /**
@@ -695,8 +788,10 @@ final class SmsQuotes extends Resource
  * Carrier registrations (`/sms/registrations`): 10DLC brand and campaign
  * registrations and toll-free verifications, with their review state and the
  * carrier's feedback. Submitting one is a paid order through `$sms->quotes`;
- * toll-free verification and removing one stay in the dashboard. Needs
- * `sms:read`.
+ * fixing a campaign carriers sent back is `resubmit`, a failed number whose
+ * fee is paid is `requestNumber`, taking down a 10DLC setup is `remove`, and
+ * archiving an approved brand registration to register it again is
+ * `replace`. Reads need `sms:read`, the writes `sms:manage`.
  */
 final class SmsRegistrations extends Resource
 {
@@ -709,6 +804,77 @@ final class SmsRegistrations extends Resource
     public function list(array $params = []): Result
     {
         return $this->http->request("GET", "/sms/registrations", $params);
+    }
+
+    /**
+     * One registration (`sreg_…`), as `list` reads it. Read a resubmit, a
+     * removal or a replacement back with it.
+     */
+    public function get(string $registrationId): Result
+    {
+        return $this->http->request("GET", "/sms/registrations/" . enc($registrationId));
+    }
+
+    /**
+     * Resubmit a 10DLC campaign carriers sent back (free), after fixing what
+     * its feedback names: an optional `opt_in_screenshot_file_id`, or
+     * `acknowledge_unchanged` when the fix was made outside Unitpost. Pass
+     * $idempotencyKey so a retry resubmits once; omitted, the SDK mints one.
+     *
+     * @param array<string, mixed> $body
+     */
+    public function resubmit(string $registrationId, array $body, ?string $idempotencyKey = null): Result
+    {
+        return $this->http->request("POST", "/sms/registrations/" . enc($registrationId) . "/resubmit", null, (object) $body, $idempotencyKey ?? bin2hex(random_bytes(16)));
+    }
+
+    /**
+     * Request a campaign's number again after it failed, when its fee is
+     * already committed (free). A number the fee doesn't cover answers 409
+     * `quote_required`: order it through `$sms->quotes` (`ten_dlc_number`).
+     * Pass $idempotencyKey so a retry requests one number; omitted, the SDK
+     * mints one.
+     *
+     * @param array<string, mixed> $body Takes no fields today; sent as `{}`.
+     */
+    public function requestNumber(string $registrationId, array $body = [], ?string $idempotencyKey = null): Result
+    {
+        return $this->http->request("POST", "/sms/registrations/" . enc($registrationId) . "/number", null, (object) $body, $idempotencyKey ?? bin2hex(random_bytes(16)));
+    }
+
+    /**
+     * Remove a 10DLC setup: take down a campaign registration
+     * (`us_ten_dlc_campaign`) that has no active number. The carrier
+     * registration is deleted, the campaign's monthly fee ends (no proration)
+     * and the registration reads `archived_at` from then on. A campaign with
+     * a number answers 409 `resource_in_use` (release the number first with
+     * `$sms->releaseNumber`); one under carrier review answers 409
+     * `conflict`. Pass $idempotencyKey so a retry removes once; omitted, the
+     * SDK mints one.
+     *
+     * @param array<string, mixed> $body Takes no fields today; sent as `{}`.
+     */
+    public function remove(string $registrationId, array $body = [], ?string $idempotencyKey = null): Result
+    {
+        return $this->http->request("POST", "/sms/registrations/" . enc($registrationId) . "/remove", null, (object) $body, $idempotencyKey ?? bin2hex(random_bytes(16)));
+    }
+
+    /**
+     * Replace an approved 10DLC brand registration (`us_ten_dlc_brand`):
+     * archive it so the brand can be registered again (corrected legal
+     * details, a new owner of the EIN). The brand unlocks for
+     * `$sms->updateBrand`, and the new registration is a quote and its
+     * confirm (`ten_dlc_brand_registration`). Nothing changes at the carrier
+     * and nothing is charged here. Refused while a number on the brand isn't
+     * released or a 10DLC setup on it isn't removed (409 `resource_in_use`,
+     * with `dependents`). Pass $idempotencyKey so a retry replaces once;
+     * omitted, the SDK mints one.
+     *
+     * @param array<string, mixed> $body Takes no fields today; sent as `{}`.
+     */
+    public function replace(string $registrationId, array $body = [], ?string $idempotencyKey = null): Result
+    {
+        return $this->http->request("POST", "/sms/registrations/" . enc($registrationId) . "/replace", null, (object) $body, $idempotencyKey ?? bin2hex(random_bytes(16)));
     }
 }
 
@@ -2129,6 +2295,59 @@ final class Suppressions extends Resource
  * `url` is its public address. Reads need `templates:read`, writes
  * `templates:write`.
  */
+/**
+ * Files (`/files`, `file_` ids): bytes handed to the API for one `purpose`,
+ * which an operation then takes by `file_id` (a brand document, the SMS
+ * opt-in evidence on a quote or resubmission, a library image, the logo). A
+ * file is private, metadata-only on the API, and expires 24 hours after it is
+ * created; what uses it keeps its own copy. `sms_*` purposes need
+ * `sms:manage`, `image` needs `templates:write` or `branding:write`
+ * (ADR-0159).
+ */
+final class Files extends Resource
+{
+    /**
+     * The workspace's unexpired files, newest first (cursor-paginated).
+     *
+     * @param array<string, mixed> $params `limit`, `after`, `before`, `purpose`.
+     */
+    public function list(array $params = []): Result
+    {
+        return $this->http->request("GET", "/files", $params);
+    }
+
+    /**
+     * Create a file (201) one of three ways: a public https `url` (fetched
+     * once, no redirects, no private addresses), base64 `data` with its
+     * `content_type` (up to about 4 MB), or neither, with `content_type` and
+     * `size_bytes`: an upload session, whose `upload` says where to PUT the
+     * bytes, with exactly `upload['headers']`. The bytes decide the type.
+     * Pass $idempotencyKey so a retry makes one file; omitted, the SDK mints
+     * one.
+     *
+     * @param array<string, mixed> $body `purpose`, and `url`, `data` + `content_type`, or `content_type` + `size_bytes`; an optional `filename`.
+     */
+    public function create(array $body, ?string $idempotencyKey = null): Result
+    {
+        return $this->http->request("POST", "/files", null, $body, $idempotencyKey ?? bin2hex(random_bytes(16)));
+    }
+
+    /**
+     * One file's metadata (never its bytes). Reading an `awaiting_upload`
+     * file checks its upload, which makes it `ready` or `failed`.
+     */
+    public function get(string $id): Result
+    {
+        return $this->http->request("GET", "/files/" . enc($id));
+    }
+
+    /** Delete a file before it expires. What already used it keeps its copy. */
+    public function delete(string $id): Result
+    {
+        return $this->http->request("DELETE", "/files/" . enc($id));
+    }
+}
+
 final class LibraryImages extends Resource
 {
     /**

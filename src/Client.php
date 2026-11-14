@@ -25,6 +25,8 @@ final class Client
     public BrandKits $brandKits;
     /** The image library templates embed (`/img/…` paths). */
     public LibraryImages $libraryImages;
+    /** Files handed to the API for one purpose, used by `file_id`. */
+    public Files $files;
     /** The email footer and unsubscribe page look. Writes need `branding:write` (on no key preset). */
     public Branding $branding;
     /** Who is calling (`whoami`, any credential), the activity log (`listActivity`, needs `activity:read`, on no key preset), and the workspace's name and image; the writes need `branding:write` (on no key preset). */
@@ -48,6 +50,7 @@ final class Client
         $this->segments = new Segments($http);
         $this->brandKits = new BrandKits($http);
         $this->libraryImages = new LibraryImages($http);
+        $this->files = new Files($http);
         $this->branding = new Branding($http);
         $this->workspace = new Workspace($http);
         $this->webhooks = new Webhooks($http);
