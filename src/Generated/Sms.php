@@ -141,6 +141,23 @@ final class Sms
      */
     public readonly ?string $failureCode;
 
+    /**
+     * The contact this text is filed under (`con_…`), or null: an inbound text
+     * from a number that isn't a contact. Make one with POST
+     * /sms/{id}/contact.
+     * @var ?string
+     */
+    public readonly ?string $contactId;
+
+    /**
+     * The other party (the sender of an inbound text, the recipient of an
+     * outbound one) can't be texted by this workspace now: they texted STOP or
+     * the number is suppressed. A reply to them is refused (`opted_out`) until
+     * they text START or UNSTOP. As of this read.
+     * @var ?bool
+     */
+    public readonly ?bool $participantOptedOut;
+
     public function __construct(
         string $object,
         string $id,
@@ -159,7 +176,9 @@ final class Sms
         ?string $lastError,
         ?SmsError $error,
         string $createdAt,
-        ?string $failureCode = null
+        ?string $failureCode = null,
+        ?string $contactId = null,
+        ?bool $participantOptedOut = null
     ) {
         $this->object = $object;
         $this->id = $id;
@@ -179,6 +198,8 @@ final class Sms
         $this->error = $error;
         $this->createdAt = $createdAt;
         $this->failureCode = $failureCode;
+        $this->contactId = $contactId;
+        $this->participantOptedOut = $participantOptedOut;
     }
 
     /**
@@ -206,7 +227,9 @@ final class Sms
             isset($data["last_error"]) ? (string) $data["last_error"] : null,
             isset($data["error"]) ? SmsError::fromArray($data["error"]) : null,
             (string) $data["created_at"],
-            isset($data["failure_code"]) ? (string) $data["failure_code"] : null
+            isset($data["failure_code"]) ? (string) $data["failure_code"] : null,
+            isset($data["contact_id"]) ? (string) $data["contact_id"] : null,
+            isset($data["participant_opted_out"]) ? (bool) $data["participant_opted_out"] : null
         );
     }
 }

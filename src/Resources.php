@@ -125,6 +125,22 @@ final class Sms extends Resource
     }
 
     /**
+     * Make the sender of a received text a contact, or file the text under
+     * the contact that already has the number. Phone only: no name and no
+     * consent (texting a number isn't consent to marketing). Every earlier
+     * text with that number that no contact holds is filed under the contact
+     * too, so `contact_id` reads it from then on. Answers the contact: 201
+     * when it is new, 200 when it existed, so a retry is safe. It counts
+     * against the plan's contacts (403 `limit_reached` when full), and a
+     * number that texted STOP stays opted out. A text you sent is refused
+     * (409). Needs `contacts:write` and `sms:read`.
+     */
+    public function addContact(string $id): Result
+    {
+        return $this->http->request("POST", "/sms/" . enc($id) . "/contact", null, (object) []);
+    }
+
+    /**
      * Cancel a queued/scheduled SMS (`['cancel' => true]`, credit refunded) or
      * move a scheduled one (`['scheduled_at' => '<ISO 8601>']`).
      *
@@ -323,6 +339,46 @@ final class Sms extends Resource
     public function resubmitNumber(string $numberId, array $body, ?string $idempotencyKey = null): Result
     {
         return $this->http->request("POST", "/sms/numbers/" . enc($numberId) . "/resubmit", null, (object) $body, $idempotencyKey ?? bin2hex(random_bytes(16)));
+    }
+
+    /**
+     * Text-to-join: the words people can text this number (`snum_…`) to sign
+     * up. `registration_warning` is set when the number's carrier
+     * registration doesn't list keyword opt-in, so carriers could flag the
+     * sign-ups. Needs `sms:read`.
+     */
+    public function listJoinKeywords(string $numberId): Result
+    {
+        return $this->http->request("GET", "/sms/numbers/" . enc($numberId) . "/join-keywords");
+    }
+
+    /**
+     * Add a join keyword to a number. A text that is exactly this word (any
+     * case) gets the double opt-in request ("Reply YES to get … texts"); the
+     * YES records marketing consent, makes the texter a contact if they
+     * aren't one, and adds them to `segment_id` (a static segment) and/or
+     * `topic_id` (an SMS topic). A keyword is never consent by itself and
+     * never lifts a STOP. STOP, HELP, START, YES and their variants are
+     * refused; at most 10 per number, and only on numbers people can text
+     * back. Answers the keyword with `registration_warning`: 201 when added,
+     * 200 when the same keyword with the same settings is already there, so
+     * a retry is safe (the same word with other settings is 409). Needs
+     * `sms:manage`.
+     *
+     * @param array<string, mixed> $body `keyword`, and optional `segment_id` / `topic_id`.
+     */
+    public function addJoinKeyword(string $numberId, array $body): Result
+    {
+        return $this->http->request("POST", "/sms/numbers/" . enc($numberId) . "/join-keywords", null, $body);
+    }
+
+    /**
+     * Remove a join keyword (`sjk_…`): it stops answering. People who already
+     * joined keep their consent, contact and memberships. Needs `sms:manage`.
+     */
+    public function removeJoinKeyword(string $numberId, string $keywordId): Result
+    {
+        return $this->http->request("DELETE", "/sms/numbers/" . enc($numberId) . "/join-keywords/" . enc($keywordId));
     }
 
     /**
