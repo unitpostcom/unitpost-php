@@ -19,7 +19,7 @@
   },
   "autoload": {
     "psr-4": { "Unitpost\\": "src/" },
-    "classmap": ["src/Resources.php", "src/Result.php"],
+    "classmap": ["src/Resources.php", "src/Result.php", "src/Organization.php"],
     "files": ["src/Webhooks.php"]
   },
   "autoload-dev": {

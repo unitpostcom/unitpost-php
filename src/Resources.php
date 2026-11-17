@@ -31,24 +31,26 @@ abstract class Resource
      * @param array<string, mixed> $params
      * @return \Generator<int, array<string, mixed>>
      */
-    protected function paginate(string $path, array $params): \Generator
+    protected function paginate(string $path, array $params, string $cursor = 'id'): \Generator
     {
         // Forward only, refused up front (this method has no `yield`, so it
         // runs at the listAll() call): a `before` cursor used to ride along
-        // with the moving `after` and 422 on the second page.
+        // with the moving `after` and 422 on the second page. `$cursor` is the
+        // row field the next `after` reads: `id`, except for a list paged by
+        // another key (organization usage rows page by `workspace_id`).
         if (!empty($params['before'])) {
             throw new \InvalidArgumentException(
                 'listAll pages forward only: `before` is not supported (use list() to page backward).'
             );
         }
-        return $this->pages($path, $params);
+        return $this->pages($path, $params, $cursor);
     }
 
     /**
      * @param array<string, mixed> $params
      * @return \Generator<int, array<string, mixed>>
      */
-    private function pages(string $path, array $params): \Generator
+    private function pages(string $path, array $params, string $cursor): \Generator
     {
         $after = $params['after'] ?? null;
         while (true) {
@@ -67,10 +69,10 @@ abstract class Resource
                 yield $row;
             }
             $last = $rows === [] ? null : $rows[array_key_last($rows)];
-            if (empty($page->data['has_more']) || !is_array($last) || !isset($last['id'])) {
+            if (empty($page->data['has_more']) || !is_array($last) || !isset($last[$cursor])) {
                 return;
             }
-            $after = $last['id'];
+            $after = $last[$cursor];
         }
     }
 }
@@ -159,7 +161,7 @@ final class Sms extends Resource
      * `Unitpost-Warning` response header; `Unitpost-Strict: true` refuses it
      * instead.
      *
-     * @param array<string, mixed> $params `limit`, `after`, `before`, `direction`, `status`, `from`, `to`, `participant`, `contact_id`, `campaign_id`, `created_after`, `created_before`, `q`, `type`, `sender_id` (a number's `snum_…` id: its texts, both directions).
+     * @param array<string, mixed> $params `limit`, `after`, `before`, `direction`, `status`, `from`, `to`, `participant`, `contact_id`, `campaign_id`, `created_after`, `created_before`, `q`, `type`, `sender_id` (a number's `snum_…` id: its texts, both directions), `tag` (texts sent with that tag, `name:value`; several comma-separated, e.g. `customer:acme,flow:reminders`, must all match; received texts have none).
      */
     public function list(array $params = []): Result
     {
@@ -2592,6 +2594,41 @@ final class Workspace extends Resource
     public function removeImage(): Result
     {
         return $this->http->request("DELETE", "/workspace/image");
+    }
+}
+
+/**
+ * The workspace's monthly spend caps and what each counted this UTC calendar
+ * month. `sms_purchases` caps the SMS carrier purchases API keys and apps
+ * confirm (`sms.quotes.confirm`). Reading needs `sms:read`, `sms:purchase` or
+ * `spend_caps:write`; `update` needs `spend_caps:write`, which no key preset
+ * includes and only the workspace owner can give a key.
+ */
+final class SpendCaps extends Resource
+{
+    /**
+     * `{ object: "spend_caps", sms_purchases: { cap_cents, max_cents,
+     * spent_cents, period_start, period_end } }`. A `cap_cents` of `null` means
+     * none, so every API purchase is refused with `403 api_spend_cap_not_set`;
+     * the cap that applies is the lower of `cap_cents` and `max_cents`.
+     */
+    public function get(): Result
+    {
+        return $this->http->request("GET", "/spend-caps");
+    }
+
+    /**
+     * Set caps: `['sms_purchases' => ['cap_cents' => <whole cents >= 0> | null]]`.
+     * Only the caps you send change; `null` clears it. A workspace its
+     * organization pays for answers `403 billed_by_organization`: its
+     * organization sets the cap with `sms_purchases_cap_cents` on the
+     * organization's workspace update.
+     *
+     * @param array<string, mixed> $body
+     */
+    public function update(array $body): Result
+    {
+        return $this->http->request("PATCH", "/spend-caps", null, $body);
     }
 }
 

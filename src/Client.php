@@ -38,6 +38,8 @@ final class Client
     public Suppressions $suppressions;
     public Jobs $jobs;
     public Usage $usage;
+    /** Monthly spend caps (`get`, `update`); `update` needs `spend_caps:write`, on no key preset. */
+    public SpendCaps $spendCaps;
 
     /** @param array<string, mixed> $options */
     public function __construct(array $options = [])
@@ -59,5 +61,6 @@ final class Client
         $this->suppressions = new Suppressions($http);
         $this->jobs = new Jobs($http);
         $this->usage = new Usage($http);
+        $this->spendCaps = new SpendCaps($http);
     }
 }

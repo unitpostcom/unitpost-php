@@ -18,6 +18,7 @@ final class Operations
         [
             'operationId' => "apiKeys.create",
             'resource' => "apiKeys",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/api-keys",
@@ -32,6 +33,7 @@ final class Operations
         [
             'operationId' => "apiKeys.delete",
             'resource' => "apiKeys",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/api-keys/{id}",
@@ -46,6 +48,7 @@ final class Operations
         [
             'operationId' => "apiKeys.list",
             'resource' => "apiKeys",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/api-keys",
@@ -60,6 +63,7 @@ final class Operations
         [
             'operationId' => "apiKeys.usage",
             'resource' => "apiKeys",
+            'credential' => "workspace",
             'method' => "usage",
             'httpMethod' => "GET",
             'path' => "/api-keys/{id}/usage",
@@ -74,6 +78,7 @@ final class Operations
         [
             'operationId' => "branding.get",
             'resource' => "branding",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/branding",
@@ -88,6 +93,7 @@ final class Operations
         [
             'operationId' => "branding.removeLogo",
             'resource' => "branding",
+            'credential' => "workspace",
             'method' => "removeLogo",
             'httpMethod' => "DELETE",
             'path' => "/branding/logo",
@@ -102,6 +108,7 @@ final class Operations
         [
             'operationId' => "branding.setLogo",
             'resource' => "branding",
+            'credential' => "workspace",
             'method' => "setLogo",
             'httpMethod' => "PUT",
             'path' => "/branding/logo",
@@ -116,6 +123,7 @@ final class Operations
         [
             'operationId' => "branding.update",
             'resource' => "branding",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/branding",
@@ -130,6 +138,7 @@ final class Operations
         [
             'operationId' => "brandkits.acceptImport",
             'resource' => "brandkits",
+            'credential' => "workspace",
             'method' => "acceptImport",
             'httpMethod' => "POST",
             'path' => "/brand-kits/imports/{id}/accept",
@@ -144,6 +153,7 @@ final class Operations
         [
             'operationId' => "brandkits.addGraphic",
             'resource' => "brandkits",
+            'credential' => "workspace",
             'method' => "addGraphic",
             'httpMethod' => "POST",
             'path' => "/brand-kits/{id}/graphics",
@@ -158,6 +168,7 @@ final class Operations
         [
             'operationId' => "brandkits.cancelImport",
             'resource' => "brandkits",
+            'credential' => "workspace",
             'method' => "cancelImport",
             'httpMethod' => "POST",
             'path' => "/brand-kits/imports/{id}/cancel",
@@ -172,6 +183,7 @@ final class Operations
         [
             'operationId' => "brandkits.create",
             'resource' => "brandkits",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/brand-kits",
@@ -186,6 +198,7 @@ final class Operations
         [
             'operationId' => "brandkits.delete",
             'resource' => "brandkits",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/brand-kits/{id}",
@@ -200,6 +213,7 @@ final class Operations
         [
             'operationId' => "brandkits.get",
             'resource' => "brandkits",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/brand-kits/{id}",
@@ -214,6 +228,7 @@ final class Operations
         [
             'operationId' => "brandkits.getImport",
             'resource' => "brandkits",
+            'credential' => "workspace",
             'method' => "getImport",
             'httpMethod' => "GET",
             'path' => "/brand-kits/imports/{id}",
@@ -228,6 +243,7 @@ final class Operations
         [
             'operationId' => "brandkits.import",
             'resource' => "brandkits",
+            'credential' => "workspace",
             'method' => "import",
             'httpMethod' => "POST",
             'path' => "/brand-kits/imports",
@@ -242,6 +258,7 @@ final class Operations
         [
             'operationId' => "brandkits.list",
             'resource' => "brandkits",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/brand-kits",
@@ -256,6 +273,7 @@ final class Operations
         [
             'operationId' => "brandkits.reset",
             'resource' => "brandkits",
+            'credential' => "workspace",
             'method' => "reset",
             'httpMethod' => "POST",
             'path' => "/brand-kits/{id}/reset",
@@ -270,6 +288,7 @@ final class Operations
         [
             'operationId' => "brandkits.setDefault",
             'resource' => "brandkits",
+            'credential' => "workspace",
             'method' => "setDefault",
             'httpMethod' => "POST",
             'path' => "/brand-kits/{id}/set-default",
@@ -284,6 +303,7 @@ final class Operations
         [
             'operationId' => "brandkits.update",
             'resource' => "brandkits",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/brand-kits/{id}",
@@ -298,6 +318,7 @@ final class Operations
         [
             'operationId' => "contactFields.create",
             'resource' => "contactFields",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/contact-fields",
@@ -312,6 +333,7 @@ final class Operations
         [
             'operationId' => "contactFields.delete",
             'resource' => "contactFields",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/contact-fields/{id}",
@@ -326,6 +348,7 @@ final class Operations
         [
             'operationId' => "contactFields.get",
             'resource' => "contactFields",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/contact-fields/{id}",
@@ -340,6 +363,7 @@ final class Operations
         [
             'operationId' => "contactFields.list",
             'resource' => "contactFields",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/contact-fields",
@@ -354,6 +378,7 @@ final class Operations
         [
             'operationId' => "contactFields.rename",
             'resource' => "contactFields",
+            'credential' => "workspace",
             'method' => "rename",
             'httpMethod' => "POST",
             'path' => "/contact-fields/{id}/rename",
@@ -368,6 +393,7 @@ final class Operations
         [
             'operationId' => "contactFields.update",
             'resource' => "contactFields",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/contact-fields/{id}",
@@ -382,6 +408,7 @@ final class Operations
         [
             'operationId' => "contacts.activity",
             'resource' => "contacts",
+            'credential' => "workspace",
             'method' => "activity",
             'httpMethod' => "GET",
             'path' => "/contacts/{id}/activity",
@@ -396,6 +423,7 @@ final class Operations
         [
             'operationId' => "contacts.addresses",
             'resource' => "contacts",
+            'credential' => "workspace",
             'method' => "addresses",
             'httpMethod' => "GET",
             'path' => "/contacts/{id}/addresses",
@@ -410,6 +438,7 @@ final class Operations
         [
             'operationId' => "contacts.cancelImport",
             'resource' => "contacts",
+            'credential' => "workspace",
             'method' => "cancelImport",
             'httpMethod' => "POST",
             'path' => "/contacts/imports/{id}/cancel",
@@ -424,6 +453,7 @@ final class Operations
         [
             'operationId' => "contacts.create",
             'resource' => "contacts",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/contacts",
@@ -438,6 +468,7 @@ final class Operations
         [
             'operationId' => "contacts.delete",
             'resource' => "contacts",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/contacts/{id}",
@@ -452,6 +483,7 @@ final class Operations
         [
             'operationId' => "contacts.export",
             'resource' => "contacts",
+            'credential' => "workspace",
             'method' => "export",
             'httpMethod' => "POST",
             'path' => "/contacts/export",
@@ -466,6 +498,7 @@ final class Operations
         [
             'operationId' => "contacts.get",
             'resource' => "contacts",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/contacts/{id}",
@@ -480,6 +513,7 @@ final class Operations
         [
             'operationId' => "contacts.getImport",
             'resource' => "contacts",
+            'credential' => "workspace",
             'method' => "getImport",
             'httpMethod' => "GET",
             'path' => "/contacts/imports/{id}",
@@ -494,6 +528,7 @@ final class Operations
         [
             'operationId' => "contacts.import",
             'resource' => "contacts",
+            'credential' => "workspace",
             'method' => "import",
             'httpMethod' => "POST",
             'path' => "/contacts/imports",
@@ -508,6 +543,7 @@ final class Operations
         [
             'operationId' => "contacts.list",
             'resource' => "contacts",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/contacts",
@@ -522,6 +558,7 @@ final class Operations
         [
             'operationId' => "contacts.listImports",
             'resource' => "contacts",
+            'credential' => "workspace",
             'method' => "listImports",
             'httpMethod' => "GET",
             'path' => "/contacts/imports",
@@ -536,6 +573,7 @@ final class Operations
         [
             'operationId' => "contacts.listSegments",
             'resource' => "contacts",
+            'credential' => "workspace",
             'method' => "listSegments",
             'httpMethod' => "GET",
             'path' => "/contacts/{id}/segments",
@@ -550,6 +588,7 @@ final class Operations
         [
             'operationId' => "contacts.retryImport",
             'resource' => "contacts",
+            'credential' => "workspace",
             'method' => "retryImport",
             'httpMethod' => "POST",
             'path' => "/contacts/imports/{id}/retry",
@@ -564,6 +603,7 @@ final class Operations
         [
             'operationId' => "contacts.update",
             'resource' => "contacts",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/contacts/{id}",
@@ -578,6 +618,7 @@ final class Operations
         [
             'operationId' => "email.batch",
             'resource' => "email",
+            'credential' => "workspace",
             'method' => "batch",
             'httpMethod' => "POST",
             'path' => "/email/batch",
@@ -592,6 +633,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.cancel",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "cancel",
             'httpMethod' => "POST",
             'path' => "/email/campaigns/{id}/cancel",
@@ -606,6 +648,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.create",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/email/campaigns",
@@ -620,6 +663,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.delete",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/email/campaigns/{id}",
@@ -634,6 +678,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.duplicate",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "duplicate",
             'httpMethod' => "POST",
             'path' => "/email/campaigns/{id}/duplicate",
@@ -648,6 +693,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.get",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/email/campaigns/{id}",
@@ -662,6 +708,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.list",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/email/campaigns",
@@ -676,6 +723,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.listAffected",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "listAffected",
             'httpMethod' => "GET",
             'path' => "/email/campaigns/{id}/quality/affected",
@@ -690,6 +738,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.listRecipients",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "listRecipients",
             'httpMethod' => "GET",
             'path' => "/email/campaigns/{id}/recipients",
@@ -704,6 +753,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.listStats",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "listStats",
             'httpMethod' => "GET",
             'path' => "/email/campaigns/stats",
@@ -718,6 +768,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.pause",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "pause",
             'httpMethod' => "POST",
             'path' => "/email/campaigns/{id}/pause",
@@ -732,6 +783,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.removeAffected",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "removeAffected",
             'httpMethod' => "POST",
             'path' => "/email/campaigns/{id}/quality/remove-affected",
@@ -746,6 +798,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.requestReview",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "requestReview",
             'httpMethod' => "POST",
             'path' => "/email/campaigns/{id}/quality/request-review",
@@ -760,6 +813,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.reschedule",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "reschedule",
             'httpMethod' => "POST",
             'path' => "/email/campaigns/{id}/reschedule",
@@ -774,6 +828,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.resume",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "resume",
             'httpMethod' => "POST",
             'path' => "/email/campaigns/{id}/resume",
@@ -788,6 +843,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.send",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "send",
             'httpMethod' => "POST",
             'path' => "/email/campaigns/{id}/send",
@@ -802,6 +858,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.stats",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "stats",
             'httpMethod' => "GET",
             'path' => "/email/campaigns/{id}/stats",
@@ -816,6 +873,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.unschedule",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "unschedule",
             'httpMethod' => "POST",
             'path' => "/email/campaigns/{id}/unschedule",
@@ -830,6 +888,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.update",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/email/campaigns/{id}",
@@ -844,6 +903,7 @@ final class Operations
         [
             'operationId' => "email.campaigns.validate",
             'resource' => "email.campaigns",
+            'credential' => "workspace",
             'method' => "validate",
             'httpMethod' => "GET",
             'path' => "/email/campaigns/{id}/validate",
@@ -858,6 +918,7 @@ final class Operations
         [
             'operationId' => "email.cancelBatch",
             'resource' => "email",
+            'credential' => "workspace",
             'method' => "cancelBatch",
             'httpMethod' => "POST",
             'path' => "/email/batches/{id}/cancel",
@@ -872,6 +933,7 @@ final class Operations
         [
             'operationId' => "email.domains.create",
             'resource' => "email.domains",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/email/domains",
@@ -886,6 +948,7 @@ final class Operations
         [
             'operationId' => "email.domains.createSender",
             'resource' => "email.domains",
+            'credential' => "workspace",
             'method' => "createSender",
             'httpMethod' => "POST",
             'path' => "/email/senders",
@@ -900,6 +963,7 @@ final class Operations
         [
             'operationId' => "email.domains.delete",
             'resource' => "email.domains",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/email/domains/{id}",
@@ -914,6 +978,7 @@ final class Operations
         [
             'operationId' => "email.domains.deleteSender",
             'resource' => "email.domains",
+            'credential' => "workspace",
             'method' => "deleteSender",
             'httpMethod' => "DELETE",
             'path' => "/email/senders/{id}",
@@ -928,6 +993,7 @@ final class Operations
         [
             'operationId' => "email.domains.diagnose",
             'resource' => "email.domains",
+            'credential' => "workspace",
             'method' => "diagnose",
             'httpMethod' => "GET",
             'path' => "/email/domains/{id}/diagnose",
@@ -942,6 +1008,7 @@ final class Operations
         [
             'operationId' => "email.domains.get",
             'resource' => "email.domains",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/email/domains/{id}",
@@ -956,6 +1023,7 @@ final class Operations
         [
             'operationId' => "email.domains.getSender",
             'resource' => "email.domains",
+            'credential' => "workspace",
             'method' => "getSender",
             'httpMethod' => "GET",
             'path' => "/email/senders/{id}",
@@ -970,6 +1038,7 @@ final class Operations
         [
             'operationId' => "email.domains.list",
             'resource' => "email.domains",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/email/domains",
@@ -984,6 +1053,7 @@ final class Operations
         [
             'operationId' => "email.domains.listSenders",
             'resource' => "email.domains",
+            'credential' => "workspace",
             'method' => "listSenders",
             'httpMethod' => "GET",
             'path' => "/email/senders",
@@ -998,6 +1068,7 @@ final class Operations
         [
             'operationId' => "email.domains.update",
             'resource' => "email.domains",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/email/domains/{id}",
@@ -1012,6 +1083,7 @@ final class Operations
         [
             'operationId' => "email.domains.updateSender",
             'resource' => "email.domains",
+            'credential' => "workspace",
             'method' => "updateSender",
             'httpMethod' => "PATCH",
             'path' => "/email/senders/{id}",
@@ -1026,6 +1098,7 @@ final class Operations
         [
             'operationId' => "email.domains.verify",
             'resource' => "email.domains",
+            'credential' => "workspace",
             'method' => "verify",
             'httpMethod' => "POST",
             'path' => "/email/domains/{id}/verify",
@@ -1040,6 +1113,7 @@ final class Operations
         [
             'operationId' => "email.get",
             'resource' => "email",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/email/{id}",
@@ -1054,6 +1128,7 @@ final class Operations
         [
             'operationId' => "email.getBatch",
             'resource' => "email",
+            'credential' => "workspace",
             'method' => "getBatch",
             'httpMethod' => "GET",
             'path' => "/email/batches/{id}",
@@ -1068,6 +1143,7 @@ final class Operations
         [
             'operationId' => "email.list",
             'resource' => "email",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/email",
@@ -1082,6 +1158,7 @@ final class Operations
         [
             'operationId' => "email.listBatches",
             'resource' => "email",
+            'credential' => "workspace",
             'method' => "listBatches",
             'httpMethod' => "GET",
             'path' => "/email/batches",
@@ -1096,6 +1173,7 @@ final class Operations
         [
             'operationId' => "email.listEvents",
             'resource' => "email",
+            'credential' => "workspace",
             'method' => "listEvents",
             'httpMethod' => "GET",
             'path' => "/email/{id}/events",
@@ -1110,6 +1188,7 @@ final class Operations
         [
             'operationId' => "email.receivedAttachmentUrl",
             'resource' => "email",
+            'credential' => "workspace",
             'method' => "receivedAttachmentUrl",
             'httpMethod' => "GET",
             'path' => "/email/received/{id}/attachments/{attachmentId}",
@@ -1124,6 +1203,7 @@ final class Operations
         [
             'operationId' => "email.receivedGet",
             'resource' => "email",
+            'credential' => "workspace",
             'method' => "receivedGet",
             'httpMethod' => "GET",
             'path' => "/email/received/{id}",
@@ -1138,6 +1218,7 @@ final class Operations
         [
             'operationId' => "email.receivedList",
             'resource' => "email",
+            'credential' => "workspace",
             'method' => "receivedList",
             'httpMethod' => "GET",
             'path' => "/email/received",
@@ -1152,6 +1233,7 @@ final class Operations
         [
             'operationId' => "email.receivedRaw",
             'resource' => "email",
+            'credential' => "workspace",
             'method' => "receivedRaw",
             'httpMethod' => "GET",
             'path' => "/email/received/{id}/raw",
@@ -1166,6 +1248,7 @@ final class Operations
         [
             'operationId' => "email.retry",
             'resource' => "email",
+            'credential' => "workspace",
             'method' => "retry",
             'httpMethod' => "POST",
             'path' => "/email/{id}/retry",
@@ -1180,6 +1263,7 @@ final class Operations
         [
             'operationId' => "email.send",
             'resource' => "email",
+            'credential' => "workspace",
             'method' => "send",
             'httpMethod' => "POST",
             'path' => "/email",
@@ -1194,6 +1278,7 @@ final class Operations
         [
             'operationId' => "email.stats",
             'resource' => "email",
+            'credential' => "workspace",
             'method' => "stats",
             'httpMethod' => "GET",
             'path' => "/email/stats",
@@ -1208,6 +1293,7 @@ final class Operations
         [
             'operationId' => "email.templates.create",
             'resource' => "email.templates",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/email/templates",
@@ -1222,6 +1308,7 @@ final class Operations
         [
             'operationId' => "email.templates.delete",
             'resource' => "email.templates",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/email/templates/{id}",
@@ -1236,6 +1323,7 @@ final class Operations
         [
             'operationId' => "email.templates.duplicate",
             'resource' => "email.templates",
+            'credential' => "workspace",
             'method' => "duplicate",
             'httpMethod' => "POST",
             'path' => "/email/templates/{id}/duplicate",
@@ -1250,6 +1338,7 @@ final class Operations
         [
             'operationId' => "email.templates.fromLibrary",
             'resource' => "email.templates",
+            'credential' => "workspace",
             'method' => "fromLibrary",
             'httpMethod' => "POST",
             'path' => "/email/templates/from-library",
@@ -1264,6 +1353,7 @@ final class Operations
         [
             'operationId' => "email.templates.get",
             'resource' => "email.templates",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/email/templates/{id}",
@@ -1278,6 +1368,7 @@ final class Operations
         [
             'operationId' => "email.templates.list",
             'resource' => "email.templates",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/email/templates",
@@ -1292,6 +1383,7 @@ final class Operations
         [
             'operationId' => "email.templates.listVersions",
             'resource' => "email.templates",
+            'credential' => "workspace",
             'method' => "listVersions",
             'httpMethod' => "GET",
             'path' => "/email/templates/{id}/versions",
@@ -1306,6 +1398,7 @@ final class Operations
         [
             'operationId' => "email.templates.render",
             'resource' => "email.templates",
+            'credential' => "workspace",
             'method' => "render",
             'httpMethod' => "POST",
             'path' => "/email/templates/{id}/render",
@@ -1320,6 +1413,7 @@ final class Operations
         [
             'operationId' => "email.templates.restoreVersion",
             'resource' => "email.templates",
+            'credential' => "workspace",
             'method' => "restoreVersion",
             'httpMethod' => "POST",
             'path' => "/email/templates/{id}/versions/{version}/restore",
@@ -1334,6 +1428,7 @@ final class Operations
         [
             'operationId' => "email.templates.testSend",
             'resource' => "email.templates",
+            'credential' => "workspace",
             'method' => "testSend",
             'httpMethod' => "POST",
             'path' => "/email/templates/{id}/test-send",
@@ -1348,6 +1443,7 @@ final class Operations
         [
             'operationId' => "email.templates.update",
             'resource' => "email.templates",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/email/templates/{id}",
@@ -1362,6 +1458,7 @@ final class Operations
         [
             'operationId' => "email.templates.usage",
             'resource' => "email.templates",
+            'credential' => "workspace",
             'method' => "usage",
             'httpMethod' => "GET",
             'path' => "/email/templates/{id}/usage",
@@ -1376,6 +1473,7 @@ final class Operations
         [
             'operationId' => "email.threads.delete",
             'resource' => "email.threads",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/email/threads/{id}",
@@ -1390,6 +1488,7 @@ final class Operations
         [
             'operationId' => "email.threads.get",
             'resource' => "email.threads",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/email/threads/{id}",
@@ -1404,6 +1503,7 @@ final class Operations
         [
             'operationId' => "email.threads.list",
             'resource' => "email.threads",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/email/threads",
@@ -1418,6 +1518,7 @@ final class Operations
         [
             'operationId' => "email.threads.reply",
             'resource' => "email.threads",
+            'credential' => "workspace",
             'method' => "reply",
             'httpMethod' => "POST",
             'path' => "/email/threads/{id}/reply",
@@ -1432,6 +1533,7 @@ final class Operations
         [
             'operationId' => "email.topics.create",
             'resource' => "email.topics",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/email/topics",
@@ -1446,6 +1548,7 @@ final class Operations
         [
             'operationId' => "email.topics.delete",
             'resource' => "email.topics",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/email/topics/{id}",
@@ -1460,6 +1563,7 @@ final class Operations
         [
             'operationId' => "email.topics.get",
             'resource' => "email.topics",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/email/topics/{id}",
@@ -1474,6 +1578,7 @@ final class Operations
         [
             'operationId' => "email.topics.list",
             'resource' => "email.topics",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/email/topics",
@@ -1488,6 +1593,7 @@ final class Operations
         [
             'operationId' => "email.topics.listTopics",
             'resource' => "email.topics",
+            'credential' => "workspace",
             'method' => "listTopics",
             'httpMethod' => "GET",
             'path' => "/contacts/{id}/topics",
@@ -1502,6 +1608,7 @@ final class Operations
         [
             'operationId' => "email.topics.optOut",
             'resource' => "email.topics",
+            'credential' => "workspace",
             'method' => "optOut",
             'httpMethod' => "POST",
             'path' => "/email/topics/{id}/opt-out",
@@ -1516,6 +1623,7 @@ final class Operations
         [
             'operationId' => "email.topics.setTopic",
             'resource' => "email.topics",
+            'credential' => "workspace",
             'method' => "setTopic",
             'httpMethod' => "POST",
             'path' => "/contacts/{id}/topics",
@@ -1530,6 +1638,7 @@ final class Operations
         [
             'operationId' => "email.topics.update",
             'resource' => "email.topics",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/email/topics/{id}",
@@ -1544,6 +1653,7 @@ final class Operations
         [
             'operationId' => "email.topics.updateTopics",
             'resource' => "email.topics",
+            'credential' => "workspace",
             'method' => "updateTopics",
             'httpMethod' => "PATCH",
             'path' => "/contacts/{id}/topics",
@@ -1558,6 +1668,7 @@ final class Operations
         [
             'operationId' => "email.update",
             'resource' => "email",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/email/{id}",
@@ -1572,6 +1683,7 @@ final class Operations
         [
             'operationId' => "files.create",
             'resource' => "files",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/files",
@@ -1586,6 +1698,7 @@ final class Operations
         [
             'operationId' => "files.delete",
             'resource' => "files",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/files/{id}",
@@ -1600,6 +1713,7 @@ final class Operations
         [
             'operationId' => "files.get",
             'resource' => "files",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/files/{id}",
@@ -1614,6 +1728,7 @@ final class Operations
         [
             'operationId' => "files.list",
             'resource' => "files",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/files",
@@ -1628,6 +1743,7 @@ final class Operations
         [
             'operationId' => "jobs.cancel",
             'resource' => "jobs",
+            'credential' => "workspace",
             'method' => "cancel",
             'httpMethod' => "POST",
             'path' => "/jobs/{id}/cancel",
@@ -1642,6 +1758,7 @@ final class Operations
         [
             'operationId' => "jobs.download",
             'resource' => "jobs",
+            'credential' => "workspace",
             'method' => "download",
             'httpMethod' => "GET",
             'path' => "/jobs/{id}/download",
@@ -1656,6 +1773,7 @@ final class Operations
         [
             'operationId' => "jobs.get",
             'resource' => "jobs",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/jobs/{id}",
@@ -1670,6 +1788,7 @@ final class Operations
         [
             'operationId' => "jobs.list",
             'resource' => "jobs",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/jobs",
@@ -1684,6 +1803,7 @@ final class Operations
         [
             'operationId' => "jobs.retry",
             'resource' => "jobs",
+            'credential' => "workspace",
             'method' => "retry",
             'httpMethod' => "POST",
             'path' => "/jobs/{id}/retry",
@@ -1698,6 +1818,7 @@ final class Operations
         [
             'operationId' => "libraryImages.create",
             'resource' => "libraryImages",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/library-images",
@@ -1712,6 +1833,7 @@ final class Operations
         [
             'operationId' => "libraryImages.delete",
             'resource' => "libraryImages",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/library-images/{id}",
@@ -1726,6 +1848,7 @@ final class Operations
         [
             'operationId' => "libraryImages.get",
             'resource' => "libraryImages",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/library-images/{id}",
@@ -1740,6 +1863,7 @@ final class Operations
         [
             'operationId' => "libraryImages.list",
             'resource' => "libraryImages",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/library-images",
@@ -1754,6 +1878,7 @@ final class Operations
         [
             'operationId' => "libraryImages.update",
             'resource' => "libraryImages",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/library-images/{id}",
@@ -1768,6 +1893,7 @@ final class Operations
         [
             'operationId' => "logs.list",
             'resource' => "logs",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/logs",
@@ -1780,8 +1906,399 @@ final class Operations
             'listItemSchema' => "RequestLog",
         ],
         [
+            'operationId' => "organization.planQuotes.confirm",
+            'resource' => "planQuotes",
+            'credential' => "organization",
+            'method' => "confirm",
+            'httpMethod' => "POST",
+            'path' => "/organizations/{id}/workspaces/{workspace_id}/plan-quotes/{quote_id}/confirm",
+            'pathParams' => ["id", "workspace_id", "quote_id"],
+            'queryParams' => [],
+            'hasBody' => true,
+            'requestSchema' => "OrganizationPlanQuoteConfirm",
+            'responseSchema' => "OrganizationPlanQuote",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.planQuotes.create",
+            'resource' => "planQuotes",
+            'credential' => "organization",
+            'method' => "create",
+            'httpMethod' => "POST",
+            'path' => "/organizations/{id}/workspaces/{workspace_id}/plan-quotes",
+            'pathParams' => ["id", "workspace_id"],
+            'queryParams' => [],
+            'hasBody' => true,
+            'requestSchema' => "OrganizationPlanQuoteCreate",
+            'responseSchema' => "OrganizationPlanQuote",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.planQuotes.get",
+            'resource' => "planQuotes",
+            'credential' => "organization",
+            'method' => "get",
+            'httpMethod' => "GET",
+            'path' => "/organizations/{id}/workspaces/{workspace_id}/plan-quotes/{quote_id}",
+            'pathParams' => ["id", "workspace_id", "quote_id"],
+            'queryParams' => [],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => "OrganizationPlanQuote",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.sharedPlan.addWorkspace",
+            'resource' => "sharedPlan",
+            'credential' => "organization",
+            'method' => "addWorkspace",
+            'httpMethod' => "PUT",
+            'path' => "/organizations/{id}/shared-plan/workspaces/{workspace_id}",
+            'pathParams' => ["id", "workspace_id"],
+            'queryParams' => [],
+            'hasBody' => true,
+            'requestSchema' => "OrganizationSharedPlanWorkspaceAdd",
+            'responseSchema' => "OrganizationSharedPlanWorkspace",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.sharedPlan.get",
+            'resource' => "sharedPlan",
+            'credential' => "organization",
+            'method' => "get",
+            'httpMethod' => "GET",
+            'path' => "/organizations/{id}/shared-plan",
+            'pathParams' => ["id"],
+            'queryParams' => [],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => "OrganizationSharedPlan",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.sharedPlan.listWorkspaces",
+            'resource' => "sharedPlan",
+            'credential' => "organization",
+            'method' => "listWorkspaces",
+            'httpMethod' => "GET",
+            'path' => "/organizations/{id}/shared-plan/workspaces",
+            'pathParams' => ["id"],
+            'queryParams' => [],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => null,
+            'isList' => true,
+            'listItemSchema' => "OrganizationSharedPlanWorkspace",
+        ],
+        [
+            'operationId' => "organization.sharedPlan.removeWorkspace",
+            'resource' => "sharedPlan",
+            'credential' => "organization",
+            'method' => "removeWorkspace",
+            'httpMethod' => "DELETE",
+            'path' => "/organizations/{id}/shared-plan/workspaces/{workspace_id}",
+            'pathParams' => ["id", "workspace_id"],
+            'queryParams' => [],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => "OrganizationSharedPlanRemoval",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.sharedPlan.updateWorkspace",
+            'resource' => "sharedPlan",
+            'credential' => "organization",
+            'method' => "updateWorkspace",
+            'httpMethod' => "PATCH",
+            'path' => "/organizations/{id}/shared-plan/workspaces/{workspace_id}",
+            'pathParams' => ["id", "workspace_id"],
+            'queryParams' => [],
+            'hasBody' => true,
+            'requestSchema' => "OrganizationSharedPlanWorkspaceUpdate",
+            'responseSchema' => "OrganizationSharedPlanWorkspace",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.usage.list",
+            'resource' => "usage",
+            'credential' => "organization",
+            'method' => "list",
+            'httpMethod' => "GET",
+            'path' => "/organizations/{id}/usage",
+            'pathParams' => ["id"],
+            'queryParams' => ["period", "limit", "after", "before", "external_id"],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => null,
+            'isList' => true,
+            'listItemSchema' => "OrganizationWorkspaceUsage",
+        ],
+        [
+            'operationId' => "organization.webhooks.create",
+            'resource' => "webhooks",
+            'credential' => "organization",
+            'method' => "create",
+            'httpMethod' => "POST",
+            'path' => "/organizations/{id}/webhooks",
+            'pathParams' => ["id"],
+            'queryParams' => [],
+            'hasBody' => true,
+            'requestSchema' => "WebhookCreate",
+            'responseSchema' => "WebhookCreated",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.webhooks.delete",
+            'resource' => "webhooks",
+            'credential' => "organization",
+            'method' => "delete",
+            'httpMethod' => "DELETE",
+            'path' => "/organizations/{id}/webhooks/{webhook_id}",
+            'pathParams' => ["id", "webhook_id"],
+            'queryParams' => [],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => null,
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.webhooks.flush",
+            'resource' => "webhooks",
+            'credential' => "organization",
+            'method' => "flush",
+            'httpMethod' => "POST",
+            'path' => "/organizations/{id}/webhooks/{webhook_id}/flush",
+            'pathParams' => ["id", "webhook_id"],
+            'queryParams' => [],
+            'hasBody' => true,
+            'requestSchema' => "WebhookFlush",
+            'responseSchema' => "WebhookFlushResult",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.webhooks.get",
+            'resource' => "webhooks",
+            'credential' => "organization",
+            'method' => "get",
+            'httpMethod' => "GET",
+            'path' => "/organizations/{id}/webhooks/{webhook_id}",
+            'pathParams' => ["id", "webhook_id"],
+            'queryParams' => [],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => "Webhook",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.webhooks.list",
+            'resource' => "webhooks",
+            'credential' => "organization",
+            'method' => "list",
+            'httpMethod' => "GET",
+            'path' => "/organizations/{id}/webhooks",
+            'pathParams' => ["id"],
+            'queryParams' => ["limit", "after", "before"],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => null,
+            'isList' => true,
+            'listItemSchema' => "Webhook",
+        ],
+        [
+            'operationId' => "organization.webhooks.listDeliveries",
+            'resource' => "webhooks",
+            'credential' => "organization",
+            'method' => "listDeliveries",
+            'httpMethod' => "GET",
+            'path' => "/organizations/{id}/webhooks/{webhook_id}/deliveries",
+            'pathParams' => ["id", "webhook_id"],
+            'queryParams' => ["limit", "after", "before", "status", "event_type", "workspace_id", "external_id"],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => null,
+            'isList' => true,
+            'listItemSchema' => "OrganizationWebhookDelivery",
+        ],
+        [
+            'operationId' => "organization.webhooks.replayDelivery",
+            'resource' => "webhooks",
+            'credential' => "organization",
+            'method' => "replayDelivery",
+            'httpMethod' => "POST",
+            'path' => "/organizations/{id}/webhooks/{webhook_id}/deliveries/{delivery}/replay",
+            'pathParams' => ["id", "webhook_id", "delivery"],
+            'queryParams' => [],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => "WebhookDeliveryReplay",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.webhooks.rotateSecret",
+            'resource' => "webhooks",
+            'credential' => "organization",
+            'method' => "rotateSecret",
+            'httpMethod' => "POST",
+            'path' => "/organizations/{id}/webhooks/{webhook_id}/rotate-secret",
+            'pathParams' => ["id", "webhook_id"],
+            'queryParams' => [],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => "WebhookSecretRotated",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.webhooks.test",
+            'resource' => "webhooks",
+            'credential' => "organization",
+            'method' => "test",
+            'httpMethod' => "POST",
+            'path' => "/organizations/{id}/webhooks/{webhook_id}/test",
+            'pathParams' => ["id", "webhook_id"],
+            'queryParams' => [],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => "WebhookTestResult",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.webhooks.update",
+            'resource' => "webhooks",
+            'credential' => "organization",
+            'method' => "update",
+            'httpMethod' => "PATCH",
+            'path' => "/organizations/{id}/webhooks/{webhook_id}",
+            'pathParams' => ["id", "webhook_id"],
+            'queryParams' => [],
+            'hasBody' => true,
+            'requestSchema' => "WebhookUpdate",
+            'responseSchema' => "Webhook",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.workspaceKeys.create",
+            'resource' => "workspaceKeys",
+            'credential' => "organization",
+            'method' => "create",
+            'httpMethod' => "POST",
+            'path' => "/organizations/{id}/workspaces/{workspace_id}/api-keys",
+            'pathParams' => ["id", "workspace_id"],
+            'queryParams' => [],
+            'hasBody' => true,
+            'requestSchema' => "WorkspaceKeyMint",
+            'responseSchema' => "MintedWorkspaceKey",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.workspaces.close",
+            'resource' => "workspaces",
+            'credential' => "organization",
+            'method' => "close",
+            'httpMethod' => "POST",
+            'path' => "/organizations/{id}/workspaces/{workspace_id}/close",
+            'pathParams' => ["id", "workspace_id"],
+            'queryParams' => [],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => "OrganizationWorkspace",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.workspaces.create",
+            'resource' => "workspaces",
+            'credential' => "organization",
+            'method' => "create",
+            'httpMethod' => "POST",
+            'path' => "/organizations/{id}/workspaces",
+            'pathParams' => ["id"],
+            'queryParams' => [],
+            'hasBody' => true,
+            'requestSchema' => "OrganizationWorkspaceCreate",
+            'responseSchema' => "OrganizationWorkspace",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.workspaces.get",
+            'resource' => "workspaces",
+            'credential' => "organization",
+            'method' => "get",
+            'httpMethod' => "GET",
+            'path' => "/organizations/{id}/workspaces/{workspace_id}",
+            'pathParams' => ["id", "workspace_id"],
+            'queryParams' => [],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => "OrganizationWorkspace",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.workspaces.list",
+            'resource' => "workspaces",
+            'credential' => "organization",
+            'method' => "list",
+            'httpMethod' => "GET",
+            'path' => "/organizations/{id}/workspaces",
+            'pathParams' => ["id"],
+            'queryParams' => ["limit", "after", "before", "external_id"],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => null,
+            'isList' => true,
+            'listItemSchema' => "OrganizationWorkspace",
+        ],
+        [
+            'operationId' => "organization.workspaces.restore",
+            'resource' => "workspaces",
+            'credential' => "organization",
+            'method' => "restore",
+            'httpMethod' => "POST",
+            'path' => "/organizations/{id}/workspaces/{workspace_id}/restore",
+            'pathParams' => ["id", "workspace_id"],
+            'queryParams' => [],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => "OrganizationWorkspace",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "organization.workspaces.update",
+            'resource' => "workspaces",
+            'credential' => "organization",
+            'method' => "update",
+            'httpMethod' => "PATCH",
+            'path' => "/organizations/{id}/workspaces/{workspace_id}",
+            'pathParams' => ["id", "workspace_id"],
+            'queryParams' => [],
+            'hasBody' => true,
+            'requestSchema' => "OrganizationWorkspaceUpdate",
+            'responseSchema' => "OrganizationWorkspace",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
             'operationId' => "segments.addMember",
             'resource' => "segments",
+            'credential' => "workspace",
             'method' => "addMember",
             'httpMethod' => "POST",
             'path' => "/segments/{id}/contacts",
@@ -1796,6 +2313,7 @@ final class Operations
         [
             'operationId' => "segments.allContacts",
             'resource' => "segments",
+            'credential' => "workspace",
             'method' => "allContacts",
             'httpMethod' => "POST",
             'path' => "/segments/all-contacts",
@@ -1810,6 +2328,7 @@ final class Operations
         [
             'operationId' => "segments.create",
             'resource' => "segments",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/segments",
@@ -1824,6 +2343,7 @@ final class Operations
         [
             'operationId' => "segments.delete",
             'resource' => "segments",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/segments/{id}",
@@ -1838,6 +2358,7 @@ final class Operations
         [
             'operationId' => "segments.get",
             'resource' => "segments",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/segments/{id}",
@@ -1852,6 +2373,7 @@ final class Operations
         [
             'operationId' => "segments.list",
             'resource' => "segments",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/segments",
@@ -1866,6 +2388,7 @@ final class Operations
         [
             'operationId' => "segments.listMembers",
             'resource' => "segments",
+            'credential' => "workspace",
             'method' => "listMembers",
             'httpMethod' => "GET",
             'path' => "/segments/{id}/contacts",
@@ -1880,6 +2403,7 @@ final class Operations
         [
             'operationId' => "segments.preview",
             'resource' => "segments",
+            'credential' => "workspace",
             'method' => "preview",
             'httpMethod' => "GET",
             'path' => "/segments/{id}/preview",
@@ -1894,6 +2418,7 @@ final class Operations
         [
             'operationId' => "segments.previewFilter",
             'resource' => "segments",
+            'credential' => "workspace",
             'method' => "previewFilter",
             'httpMethod' => "POST",
             'path' => "/segments/preview",
@@ -1908,6 +2433,7 @@ final class Operations
         [
             'operationId' => "segments.removeMember",
             'resource' => "segments",
+            'credential' => "workspace",
             'method' => "removeMember",
             'httpMethod' => "DELETE",
             'path' => "/segments/{id}/contacts/{contact}",
@@ -1922,6 +2448,7 @@ final class Operations
         [
             'operationId' => "segments.update",
             'resource' => "segments",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/segments/{id}",
@@ -1936,6 +2463,7 @@ final class Operations
         [
             'operationId' => "segments.updateMember",
             'resource' => "segments",
+            'credential' => "workspace",
             'method' => "updateMember",
             'httpMethod' => "PATCH",
             'path' => "/segments/{id}/contacts/{contact}",
@@ -1950,6 +2478,7 @@ final class Operations
         [
             'operationId' => "sms.addBrandDocument",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "addBrandDocument",
             'httpMethod' => "POST",
             'path' => "/sms/brands/{id}/documents",
@@ -1964,6 +2493,7 @@ final class Operations
         [
             'operationId' => "sms.addContact",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "addContact",
             'httpMethod' => "POST",
             'path' => "/sms/{id}/contact",
@@ -1978,6 +2508,7 @@ final class Operations
         [
             'operationId' => "sms.addJoinKeyword",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "addJoinKeyword",
             'httpMethod' => "POST",
             'path' => "/sms/numbers/{id}/join-keywords",
@@ -1992,6 +2523,7 @@ final class Operations
         [
             'operationId' => "sms.billing.listResources",
             'resource' => "sms.billing",
+            'credential' => "workspace",
             'method' => "listResources",
             'httpMethod' => "GET",
             'path' => "/sms/billing/resources",
@@ -2006,6 +2538,7 @@ final class Operations
         [
             'operationId' => "sms.brandDocumentUrl",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "brandDocumentUrl",
             'httpMethod' => "GET",
             'path' => "/sms/brands/{id}/documents/{documentId}/url",
@@ -2020,6 +2553,7 @@ final class Operations
         [
             'operationId' => "sms.brands",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "brands",
             'httpMethod' => "GET",
             'path' => "/sms/brands",
@@ -2034,6 +2568,7 @@ final class Operations
         [
             'operationId' => "sms.campaigns.cancel",
             'resource' => "sms.campaigns",
+            'credential' => "workspace",
             'method' => "cancel",
             'httpMethod' => "POST",
             'path' => "/sms/campaigns/{id}/cancel",
@@ -2048,6 +2583,7 @@ final class Operations
         [
             'operationId' => "sms.campaigns.create",
             'resource' => "sms.campaigns",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/sms/campaigns",
@@ -2062,6 +2598,7 @@ final class Operations
         [
             'operationId' => "sms.campaigns.delete",
             'resource' => "sms.campaigns",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/sms/campaigns/{id}",
@@ -2076,6 +2613,7 @@ final class Operations
         [
             'operationId' => "sms.campaigns.duplicate",
             'resource' => "sms.campaigns",
+            'credential' => "workspace",
             'method' => "duplicate",
             'httpMethod' => "POST",
             'path' => "/sms/campaigns/{id}/duplicate",
@@ -2090,6 +2628,7 @@ final class Operations
         [
             'operationId' => "sms.campaigns.get",
             'resource' => "sms.campaigns",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/sms/campaigns/{id}",
@@ -2104,6 +2643,7 @@ final class Operations
         [
             'operationId' => "sms.campaigns.list",
             'resource' => "sms.campaigns",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/sms/campaigns",
@@ -2118,6 +2658,7 @@ final class Operations
         [
             'operationId' => "sms.campaigns.listRecipients",
             'resource' => "sms.campaigns",
+            'credential' => "workspace",
             'method' => "listRecipients",
             'httpMethod' => "GET",
             'path' => "/sms/campaigns/{id}/recipients",
@@ -2132,6 +2673,7 @@ final class Operations
         [
             'operationId' => "sms.campaigns.pause",
             'resource' => "sms.campaigns",
+            'credential' => "workspace",
             'method' => "pause",
             'httpMethod' => "POST",
             'path' => "/sms/campaigns/{id}/pause",
@@ -2146,6 +2688,7 @@ final class Operations
         [
             'operationId' => "sms.campaigns.reschedule",
             'resource' => "sms.campaigns",
+            'credential' => "workspace",
             'method' => "reschedule",
             'httpMethod' => "POST",
             'path' => "/sms/campaigns/{id}/reschedule",
@@ -2160,6 +2703,7 @@ final class Operations
         [
             'operationId' => "sms.campaigns.resume",
             'resource' => "sms.campaigns",
+            'credential' => "workspace",
             'method' => "resume",
             'httpMethod' => "POST",
             'path' => "/sms/campaigns/{id}/resume",
@@ -2174,6 +2718,7 @@ final class Operations
         [
             'operationId' => "sms.campaigns.send",
             'resource' => "sms.campaigns",
+            'credential' => "workspace",
             'method' => "send",
             'httpMethod' => "POST",
             'path' => "/sms/campaigns/{id}/send",
@@ -2188,6 +2733,7 @@ final class Operations
         [
             'operationId' => "sms.campaigns.unschedule",
             'resource' => "sms.campaigns",
+            'credential' => "workspace",
             'method' => "unschedule",
             'httpMethod' => "POST",
             'path' => "/sms/campaigns/{id}/unschedule",
@@ -2202,6 +2748,7 @@ final class Operations
         [
             'operationId' => "sms.campaigns.update",
             'resource' => "sms.campaigns",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/sms/campaigns/{id}",
@@ -2216,6 +2763,7 @@ final class Operations
         [
             'operationId' => "sms.campaigns.validate",
             'resource' => "sms.campaigns",
+            'credential' => "workspace",
             'method' => "validate",
             'httpMethod' => "GET",
             'path' => "/sms/campaigns/{id}/validate",
@@ -2230,6 +2778,7 @@ final class Operations
         [
             'operationId' => "sms.consentSetups.list",
             'resource' => "sms.consentSetups",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/sms/consent-setups",
@@ -2244,6 +2793,7 @@ final class Operations
         [
             'operationId' => "sms.createBrand",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "createBrand",
             'httpMethod' => "POST",
             'path' => "/sms/brands",
@@ -2258,6 +2808,7 @@ final class Operations
         [
             'operationId' => "sms.get",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/sms/{id}",
@@ -2272,6 +2823,7 @@ final class Operations
         [
             'operationId' => "sms.getBrand",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "getBrand",
             'httpMethod' => "GET",
             'path' => "/sms/brands/{id}",
@@ -2286,6 +2838,7 @@ final class Operations
         [
             'operationId' => "sms.getBrandDocument",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "getBrandDocument",
             'httpMethod' => "GET",
             'path' => "/sms/brands/{id}/documents/{documentId}",
@@ -2300,6 +2853,7 @@ final class Operations
         [
             'operationId' => "sms.getNumber",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "getNumber",
             'httpMethod' => "GET",
             'path' => "/sms/numbers/{id}",
@@ -2314,11 +2868,12 @@ final class Operations
         [
             'operationId' => "sms.list",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/sms",
             'pathParams' => [],
-            'queryParams' => ["limit", "after", "before", "direction", "status", "from", "to", "participant", "contact_id", "campaign_id", "created_after", "created_before", "sender_id", "q", "type"],
+            'queryParams' => ["limit", "after", "before", "direction", "status", "from", "to", "participant", "contact_id", "campaign_id", "created_after", "created_before", "sender_id", "q", "type", "tag"],
             'hasBody' => false,
             'requestSchema' => null,
             'responseSchema' => null,
@@ -2328,6 +2883,7 @@ final class Operations
         [
             'operationId' => "sms.listBrandDocuments",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "listBrandDocuments",
             'httpMethod' => "GET",
             'path' => "/sms/brands/{id}/documents",
@@ -2342,6 +2898,7 @@ final class Operations
         [
             'operationId' => "sms.listJoinKeywords",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "listJoinKeywords",
             'httpMethod' => "GET",
             'path' => "/sms/numbers/{id}/join-keywords",
@@ -2356,6 +2913,7 @@ final class Operations
         [
             'operationId' => "sms.messagingPrograms.create",
             'resource' => "sms.messagingPrograms",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/sms/messaging-programs",
@@ -2370,6 +2928,7 @@ final class Operations
         [
             'operationId' => "sms.messagingPrograms.delete",
             'resource' => "sms.messagingPrograms",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/sms/messaging-programs/{id}",
@@ -2384,6 +2943,7 @@ final class Operations
         [
             'operationId' => "sms.messagingPrograms.duplicate",
             'resource' => "sms.messagingPrograms",
+            'credential' => "workspace",
             'method' => "duplicate",
             'httpMethod' => "POST",
             'path' => "/sms/messaging-programs/{id}/duplicate",
@@ -2398,6 +2958,7 @@ final class Operations
         [
             'operationId' => "sms.messagingPrograms.get",
             'resource' => "sms.messagingPrograms",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/sms/messaging-programs/{id}",
@@ -2412,6 +2973,7 @@ final class Operations
         [
             'operationId' => "sms.messagingPrograms.list",
             'resource' => "sms.messagingPrograms",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/sms/messaging-programs",
@@ -2426,6 +2988,7 @@ final class Operations
         [
             'operationId' => "sms.messagingPrograms.update",
             'resource' => "sms.messagingPrograms",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/sms/messaging-programs/{id}",
@@ -2440,6 +3003,7 @@ final class Operations
         [
             'operationId' => "sms.numbers",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "numbers",
             'httpMethod' => "GET",
             'path' => "/sms/numbers",
@@ -2454,6 +3018,7 @@ final class Operations
         [
             'operationId' => "sms.quotes.confirm",
             'resource' => "sms.quotes",
+            'credential' => "workspace",
             'method' => "confirm",
             'httpMethod' => "POST",
             'path' => "/sms/quotes/{id}/confirm",
@@ -2468,6 +3033,7 @@ final class Operations
         [
             'operationId' => "sms.quotes.create",
             'resource' => "sms.quotes",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/sms/quotes",
@@ -2482,6 +3048,7 @@ final class Operations
         [
             'operationId' => "sms.quotes.get",
             'resource' => "sms.quotes",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/sms/quotes/{id}",
@@ -2496,6 +3063,7 @@ final class Operations
         [
             'operationId' => "sms.recordSmsConsent",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "recordSmsConsent",
             'httpMethod' => "POST",
             'path' => "/contacts/{id}/sms-consent",
@@ -2510,6 +3078,7 @@ final class Operations
         [
             'operationId' => "sms.registrations.get",
             'resource' => "sms.registrations",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/sms/registrations/{id}",
@@ -2524,6 +3093,7 @@ final class Operations
         [
             'operationId' => "sms.registrations.list",
             'resource' => "sms.registrations",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/sms/registrations",
@@ -2538,6 +3108,7 @@ final class Operations
         [
             'operationId' => "sms.registrations.remove",
             'resource' => "sms.registrations",
+            'credential' => "workspace",
             'method' => "remove",
             'httpMethod' => "POST",
             'path' => "/sms/registrations/{id}/remove",
@@ -2552,6 +3123,7 @@ final class Operations
         [
             'operationId' => "sms.registrations.replace",
             'resource' => "sms.registrations",
+            'credential' => "workspace",
             'method' => "replace",
             'httpMethod' => "POST",
             'path' => "/sms/registrations/{id}/replace",
@@ -2566,6 +3138,7 @@ final class Operations
         [
             'operationId' => "sms.registrations.requestNumber",
             'resource' => "sms.registrations",
+            'credential' => "workspace",
             'method' => "requestNumber",
             'httpMethod' => "POST",
             'path' => "/sms/registrations/{id}/number",
@@ -2580,6 +3153,7 @@ final class Operations
         [
             'operationId' => "sms.registrations.resubmit",
             'resource' => "sms.registrations",
+            'credential' => "workspace",
             'method' => "resubmit",
             'httpMethod' => "POST",
             'path' => "/sms/registrations/{id}/resubmit",
@@ -2594,6 +3168,7 @@ final class Operations
         [
             'operationId' => "sms.releaseNumber",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "releaseNumber",
             'httpMethod' => "POST",
             'path' => "/sms/numbers/{id}/release",
@@ -2608,6 +3183,7 @@ final class Operations
         [
             'operationId' => "sms.removeBrandDocument",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "removeBrandDocument",
             'httpMethod' => "DELETE",
             'path' => "/sms/brands/{id}/documents/{documentId}",
@@ -2622,6 +3198,7 @@ final class Operations
         [
             'operationId' => "sms.removeJoinKeyword",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "removeJoinKeyword",
             'httpMethod' => "DELETE",
             'path' => "/sms/numbers/{id}/join-keywords/{keywordId}",
@@ -2636,6 +3213,7 @@ final class Operations
         [
             'operationId' => "sms.requestSmsOptIn",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "requestSmsOptIn",
             'httpMethod' => "POST",
             'path' => "/contacts/{id}/sms-opt-in-request",
@@ -2650,6 +3228,7 @@ final class Operations
         [
             'operationId' => "sms.resubmitNumber",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "resubmitNumber",
             'httpMethod' => "POST",
             'path' => "/sms/numbers/{id}/resubmit",
@@ -2664,6 +3243,7 @@ final class Operations
         [
             'operationId' => "sms.send",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "send",
             'httpMethod' => "POST",
             'path' => "/sms",
@@ -2678,6 +3258,7 @@ final class Operations
         [
             'operationId' => "sms.smsConsent",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "smsConsent",
             'httpMethod' => "GET",
             'path' => "/contacts/{id}/sms-consent",
@@ -2692,6 +3273,7 @@ final class Operations
         [
             'operationId' => "sms.stats",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "stats",
             'httpMethod' => "GET",
             'path' => "/sms/stats",
@@ -2706,6 +3288,7 @@ final class Operations
         [
             'operationId' => "sms.templates.create",
             'resource' => "sms.templates",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/sms/templates",
@@ -2720,6 +3303,7 @@ final class Operations
         [
             'operationId' => "sms.templates.delete",
             'resource' => "sms.templates",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/sms/templates/{id}",
@@ -2734,6 +3318,7 @@ final class Operations
         [
             'operationId' => "sms.templates.get",
             'resource' => "sms.templates",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/sms/templates/{id}",
@@ -2748,6 +3333,7 @@ final class Operations
         [
             'operationId' => "sms.templates.list",
             'resource' => "sms.templates",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/sms/templates",
@@ -2762,6 +3348,7 @@ final class Operations
         [
             'operationId' => "sms.templates.testSend",
             'resource' => "sms.templates",
+            'credential' => "workspace",
             'method' => "testSend",
             'httpMethod' => "POST",
             'path' => "/sms/templates/{id}/test-send",
@@ -2776,6 +3363,7 @@ final class Operations
         [
             'operationId' => "sms.templates.update",
             'resource' => "sms.templates",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/sms/templates/{id}",
@@ -2790,6 +3378,7 @@ final class Operations
         [
             'operationId' => "sms.templates.usage",
             'resource' => "sms.templates",
+            'credential' => "workspace",
             'method' => "usage",
             'httpMethod' => "GET",
             'path' => "/sms/templates/{id}/usage",
@@ -2804,6 +3393,7 @@ final class Operations
         [
             'operationId' => "sms.testDestinations.delete",
             'resource' => "sms.testDestinations",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/sms/test-destinations/{id}",
@@ -2818,6 +3408,7 @@ final class Operations
         [
             'operationId' => "sms.testDestinations.list",
             'resource' => "sms.testDestinations",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/sms/test-destinations",
@@ -2832,6 +3423,7 @@ final class Operations
         [
             'operationId' => "sms.topics.create",
             'resource' => "sms.topics",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/sms/topics",
@@ -2846,6 +3438,7 @@ final class Operations
         [
             'operationId' => "sms.topics.delete",
             'resource' => "sms.topics",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/sms/topics/{id}",
@@ -2860,6 +3453,7 @@ final class Operations
         [
             'operationId' => "sms.topics.get",
             'resource' => "sms.topics",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/sms/topics/{id}",
@@ -2874,6 +3468,7 @@ final class Operations
         [
             'operationId' => "sms.topics.list",
             'resource' => "sms.topics",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/sms/topics",
@@ -2888,6 +3483,7 @@ final class Operations
         [
             'operationId' => "sms.topics.optOut",
             'resource' => "sms.topics",
+            'credential' => "workspace",
             'method' => "optOut",
             'httpMethod' => "POST",
             'path' => "/sms/topics/{id}/opt-out",
@@ -2902,6 +3498,7 @@ final class Operations
         [
             'operationId' => "sms.topics.update",
             'resource' => "sms.topics",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/sms/topics/{id}",
@@ -2916,6 +3513,7 @@ final class Operations
         [
             'operationId' => "sms.update",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/sms/{id}",
@@ -2930,6 +3528,7 @@ final class Operations
         [
             'operationId' => "sms.updateBrand",
             'resource' => "sms",
+            'credential' => "workspace",
             'method' => "updateBrand",
             'httpMethod' => "PATCH",
             'path' => "/sms/brands/{id}",
@@ -2942,8 +3541,39 @@ final class Operations
             'listItemSchema' => null,
         ],
         [
+            'operationId' => "spendCaps.get",
+            'resource' => "spendCaps",
+            'credential' => "workspace",
+            'method' => "get",
+            'httpMethod' => "GET",
+            'path' => "/spend-caps",
+            'pathParams' => [],
+            'queryParams' => [],
+            'hasBody' => false,
+            'requestSchema' => null,
+            'responseSchema' => "SpendCaps",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
+            'operationId' => "spendCaps.update",
+            'resource' => "spendCaps",
+            'credential' => "workspace",
+            'method' => "update",
+            'httpMethod' => "PATCH",
+            'path' => "/spend-caps",
+            'pathParams' => [],
+            'queryParams' => [],
+            'hasBody' => true,
+            'requestSchema' => "SpendCapsUpdate",
+            'responseSchema' => "SpendCaps",
+            'isList' => false,
+            'listItemSchema' => null,
+        ],
+        [
             'operationId' => "suppressions.create",
             'resource' => "suppressions",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/suppressions",
@@ -2958,6 +3588,7 @@ final class Operations
         [
             'operationId' => "suppressions.delete",
             'resource' => "suppressions",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/suppressions/{id}",
@@ -2972,6 +3603,7 @@ final class Operations
         [
             'operationId' => "suppressions.get",
             'resource' => "suppressions",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/suppressions/{id}",
@@ -2986,6 +3618,7 @@ final class Operations
         [
             'operationId' => "suppressions.list",
             'resource' => "suppressions",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/suppressions",
@@ -3000,6 +3633,7 @@ final class Operations
         [
             'operationId' => "usage.get",
             'resource' => "usage",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/usage",
@@ -3014,6 +3648,7 @@ final class Operations
         [
             'operationId' => "webhooks.create",
             'resource' => "webhooks",
+            'credential' => "workspace",
             'method' => "create",
             'httpMethod' => "POST",
             'path' => "/webhooks",
@@ -3028,6 +3663,7 @@ final class Operations
         [
             'operationId' => "webhooks.delete",
             'resource' => "webhooks",
+            'credential' => "workspace",
             'method' => "delete",
             'httpMethod' => "DELETE",
             'path' => "/webhooks/{id}",
@@ -3042,6 +3678,7 @@ final class Operations
         [
             'operationId' => "webhooks.flush",
             'resource' => "webhooks",
+            'credential' => "workspace",
             'method' => "flush",
             'httpMethod' => "POST",
             'path' => "/webhooks/{id}/flush",
@@ -3056,6 +3693,7 @@ final class Operations
         [
             'operationId' => "webhooks.get",
             'resource' => "webhooks",
+            'credential' => "workspace",
             'method' => "get",
             'httpMethod' => "GET",
             'path' => "/webhooks/{id}",
@@ -3070,6 +3708,7 @@ final class Operations
         [
             'operationId' => "webhooks.list",
             'resource' => "webhooks",
+            'credential' => "workspace",
             'method' => "list",
             'httpMethod' => "GET",
             'path' => "/webhooks",
@@ -3084,6 +3723,7 @@ final class Operations
         [
             'operationId' => "webhooks.listDeliveries",
             'resource' => "webhooks",
+            'credential' => "workspace",
             'method' => "listDeliveries",
             'httpMethod' => "GET",
             'path' => "/webhooks/{id}/deliveries",
@@ -3098,6 +3738,7 @@ final class Operations
         [
             'operationId' => "webhooks.replayDelivery",
             'resource' => "webhooks",
+            'credential' => "workspace",
             'method' => "replayDelivery",
             'httpMethod' => "POST",
             'path' => "/webhooks/{id}/deliveries/{delivery}/replay",
@@ -3112,6 +3753,7 @@ final class Operations
         [
             'operationId' => "webhooks.rotateSecret",
             'resource' => "webhooks",
+            'credential' => "workspace",
             'method' => "rotateSecret",
             'httpMethod' => "POST",
             'path' => "/webhooks/{id}/rotate-secret",
@@ -3126,6 +3768,7 @@ final class Operations
         [
             'operationId' => "webhooks.test",
             'resource' => "webhooks",
+            'credential' => "workspace",
             'method' => "test",
             'httpMethod' => "POST",
             'path' => "/webhooks/{id}/test",
@@ -3140,6 +3783,7 @@ final class Operations
         [
             'operationId' => "webhooks.update",
             'resource' => "webhooks",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/webhooks/{id}",
@@ -3154,6 +3798,7 @@ final class Operations
         [
             'operationId' => "workspace.listActivity",
             'resource' => "workspace",
+            'credential' => "workspace",
             'method' => "listActivity",
             'httpMethod' => "GET",
             'path' => "/activity",
@@ -3168,6 +3813,7 @@ final class Operations
         [
             'operationId' => "workspace.removeImage",
             'resource' => "workspace",
+            'credential' => "workspace",
             'method' => "removeImage",
             'httpMethod' => "DELETE",
             'path' => "/workspace/image",
@@ -3182,6 +3828,7 @@ final class Operations
         [
             'operationId' => "workspace.setImage",
             'resource' => "workspace",
+            'credential' => "workspace",
             'method' => "setImage",
             'httpMethod' => "PUT",
             'path' => "/workspace/image",
@@ -3196,6 +3843,7 @@ final class Operations
         [
             'operationId' => "workspace.update",
             'resource' => "workspace",
+            'credential' => "workspace",
             'method' => "update",
             'httpMethod' => "PATCH",
             'path' => "/workspace",
@@ -3210,6 +3858,7 @@ final class Operations
         [
             'operationId' => "workspace.whoami",
             'resource' => "workspace",
+            'credential' => "workspace",
             'method' => "whoami",
             'httpMethod' => "GET",
             'path' => "/whoami",

@@ -93,6 +93,9 @@ final class Sms
     public readonly bool $looksLikeOptOut;
 
     /**
+     * The other party's country (ISO 3166-1 alpha-2): the recipient's on a
+     * send, the sender's on a received text. Null when the number's country
+     * isn't known.
      * @var ?string
      */
     public readonly ?string $country;
@@ -158,6 +161,13 @@ final class Sms
      */
     public readonly ?bool $participantOptedOut;
 
+    /**
+     * The tags the text was sent with (`tags` on `POST /sms`), in the order
+     * given. Empty for a text sent without tags and for received texts.
+     * @var ?list<SmsTagsItem>
+     */
+    public readonly ?array $tags;
+
     public function __construct(
         string $object,
         string $id,
@@ -178,7 +188,8 @@ final class Sms
         string $createdAt,
         ?string $failureCode = null,
         ?string $contactId = null,
-        ?bool $participantOptedOut = null
+        ?bool $participantOptedOut = null,
+        ?array $tags = null
     ) {
         $this->object = $object;
         $this->id = $id;
@@ -200,6 +211,7 @@ final class Sms
         $this->failureCode = $failureCode;
         $this->contactId = $contactId;
         $this->participantOptedOut = $participantOptedOut;
+        $this->tags = $tags;
     }
 
     /**
@@ -229,7 +241,8 @@ final class Sms
             (string) $data["created_at"],
             isset($data["failure_code"]) ? (string) $data["failure_code"] : null,
             isset($data["contact_id"]) ? (string) $data["contact_id"] : null,
-            isset($data["participant_opted_out"]) ? (bool) $data["participant_opted_out"] : null
+            isset($data["participant_opted_out"]) ? (bool) $data["participant_opted_out"] : null,
+            array_map(static fn (array $x): SmsTagsItem => SmsTagsItem::fromArray($x), $data["tags"] ?? [])
         );
     }
 }

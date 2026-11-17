@@ -23,6 +23,33 @@ if ($result->error) {
 
 `$unitpost->sms` is the SMS channel (send, get, list, brands, numbers, contact SMS consent). Available on paid plans: on the free plan `send` returns a `403` with code `limit_reached`, while the reads keep working.
 
+## Organization keys
+
+A platform that gives each of its customers a Unitpost workspace uses an organization key (`ok_live_…`, made by an Owner or Admin in the dashboard under Organization → API) with the second client. It reads `UNITPOST_ORG_KEY` and `UNITPOST_ORGANIZATION_ID` (`org_…`) when you don't pass them; the key is never read from `UNITPOST_API_KEY`. A missing one throws `Unitpost\OrganizationConfigException` (an `InvalidArgumentException`; `$e->errorCode` is `missing_api_key` or `missing_organization_id`).
+
+```php
+use Unitpost\Client;
+use Unitpost\OrganizationClient;
+
+$org = new OrganizationClient(); // or new OrganizationClient(['apiKey' => 'ok_live_…', 'organizationId' => 'org_…'])
+$ws = $org->workspaces->create(['name' => 'Acme', 'external_id' => 'cust_42']); // mints an Idempotency-Key unless you pass one
+
+// To work inside that workspace, mint its key and make a workspace client.
+$key = $org->workspaceKeys->create($ws->data['id'], ['name' => 'backend']);
+$acme = new Client(['apiKey' => $key->data['key']]); // the secret is in this answer only
+```
+
+| Accessor | Methods |
+| --- | --- |
+| `$org->workspaces` | `list`, `listAll`, `create`, `get`, `update`, `close`, `restore` |
+| `$org->workspaceKeys` | `create($workspaceId, $body)` |
+| `$org->webhooks` | `list`, `listAll`, `create`, `get`, `update`, `delete`, `rotateSecret`, `test`, `listDeliveries` (needs `organizations:write`), `listAllDeliveries`, `replayDelivery`, `flush`, `verify` |
+| `$org->usage` | `list`, `listAll` |
+| `$org->planQuotes` | `create`, `get`, `confirm` (mints an Idempotency-Key unless you pass one) |
+| `$org->sharedPlan` | The organization's shared plan: `get`, `listWorkspaces`, `addWorkspace`, `updateWorkspace` (its cap), `removeWorkspace` (adding and removing mint an Idempotency-Key unless you pass one) |
+
+The workspace `Client` has none of these and never calls an `/organizations/` route; the organization client calls no workspace route. Same transport, retries and errors as `Client`.
+
 ## Idempotency
 
 `email->send`, `email->batch` and `sms->send` always carry an `Idempotency-Key`: the SDK mints one per call so its own automatic retries can never send twice. Pass your own key to dedupe across separate calls (for example a job retried after your process crashed): the API replays the first result for the same key for 24 hours instead of sending again.
