@@ -1224,6 +1224,25 @@ final class Contacts extends Resource
         // `(object)` so the default is sent as `{}`, not `[]`.
         return $this->http->request("POST", "/contacts/export", null, (object) $body);
     }
+
+    /**
+     * Set one custom field to the same value on many contacts, as the
+     * Contacts page's Set field does, as a background job (202, the job):
+     * `key`, `value` (typed against the field; `null` clears it), optional
+     * `only_empty`, and exactly one of `['contact_ids' => [...]]` or
+     * `['emails' => [...]]` (up to 1,000, each a contact of this workspace)
+     * or `['segment_id' => ...]` (every member, however many; also needs
+     * `segments:read`). Each contact whose value changes gets
+     * `contact.updated`; consent is never touched. Follow it with
+     * `jobs->get($id)`. Pass an `$idempotencyKey` so a retry answers the same
+     * job; one is generated when you don't.
+     *
+     * @param array<string, mixed> $body
+     */
+    public function setField(array $body, ?string $idempotencyKey = null): Result
+    {
+        return $this->http->request("POST", "/contacts/set-field", null, $body, $idempotencyKey ?? bin2hex(random_bytes(16)));
+    }
 }
 
 final class ContactFields extends Resource

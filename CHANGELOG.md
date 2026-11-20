@@ -9,6 +9,11 @@ change that bumps the version (docs/sdk/RELEASING.md).
 
 ## Unreleased
 
+## 0.6.0
+
+- Set one custom field on many contacts: `contacts->setField($body, $idempotencyKey)` (`key`, `value`, (exactly one of `contact_ids` or `emails`, up to 1,000, or `segment_id`; `only_empty` keeps the values contacts already have). It answers the job (202); follow it with `jobs->get($id)`. The SDK mints an idempotency key when you pass none, so a retry answers the same job. Needs `contacts:write` (a segment also `segments:read`).
+- `segments->addMember` also takes a list (`['contact_ids' => [...]]` or `['emails' => [...]]`, up to 1,000), which answers each listed contact's membership and `added`.
+
 ## 0.5.0
 
 - `Unitpost\OrganizationClient` gains `sharedPlan`: `get`, `listWorkspaces`, `addWorkspace`, `updateWorkspace`, `removeWorkspace` (the organization's shared plan; adding and removing take an optional idempotency key, or the SDK mints one). Reads need `organizations:read`; the three writes need `organizations:billing`. Buying, upgrading or ending the shared plan stays in the dashboard.
